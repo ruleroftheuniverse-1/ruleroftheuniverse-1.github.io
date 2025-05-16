@@ -1,0 +1,14 @@
+<header>
+  <nav>
+  <ul>
+    <li><a href="/" {% if page.url == "/" %}class="active"{% endif %}>Home</a></li>
+    <li><a href="/research.html" {% if page.url == "/research.html" %}class="active"{% endif %}>Research</a></li>
+    <li><a href="/projects.html" {% if page.url == "/projects.html" %}class="active"{% endif %}>Projects</a></li>
+    <li><a href="/writing.html" {% if page.url == "/writing.html" %}class="active"{% endif %}>Writing</a></li>
+    <li><a href="/cv.html" {% if page.url == "/cv.html" %}class="active"{% endif %}>CV</a></li>
+    <li><a href="/contact.html" {% if page.url == "/contact.html" %}class="active"{% endif %}>Contact</a></li>
+  </ul>
+  <input type="checkbox" id="light-toggle" hidden>
+  <label class="light-toggle" for="light-toggle">☀️ Light Mode</label>
+</nav>
+</header>
