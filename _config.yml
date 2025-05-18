@@ -2,3 +2,7 @@ title: Nichole Smith
 markdown: kramdown
 theme: null
 permalink: pretty
+collections:
+  pages:
+    output: true
+    permalink: /:name.html
