@@ -9,5 +9,26 @@
     </main>
 
     {% include footer.html %}
+	<script>
+  const toggle = document.getElementById('light-toggle');
+  const body = document.body;
+
+  // Load saved theme
+  if (localStorage.getItem('theme') === 'light') {
+    toggle.checked = true;
+    body.classList.add('light');
+  }
+
+  toggle.addEventListener('change', () => {
+    if (toggle.checked) {
+      body.classList.add('light');
+      localStorage.setItem('theme', 'light');
+    } else {
+      body.classList.remove('light');
+      localStorage.setItem('theme', 'dark');
+    }
+  });
+</script>
+
   </body>
 </html>

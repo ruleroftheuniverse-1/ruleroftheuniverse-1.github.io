@@ -147,3 +147,25 @@ nav ul li a.active {
   font-weight: bold;
   text-decoration: underline;
 }
+
+body {
+  background-color: #111;
+  color: #eee;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.light {
+  background-color: #fff;
+  color: #111;
+}
+
+a {
+  color: #90cdf4;
+}
+body.light a {
+  color: #0645ad;
+}
+
+body, .content, header, footer {
+  transition: background-color 0.3s, color 0.3s;
+}
