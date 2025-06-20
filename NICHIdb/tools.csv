@@ -1,0 +1,13 @@
+ID: tool-cfs-sim
+Title: Cognitive Feedback System Simulator
+Dates: 2025–ongoing
+Domains: [AI, Cognitive Modeling, Simulation]
+Tags: [theory, tool-building, mind modeling]
+Purpose: To simulate mind-body-environment feedback loops with adjustable parameters
+
+ID: tool-integer-partitioner
+Title: Restricted Integer Partition Calculator
+Dates: 2016
+Domains: [Mathematics, Experimental]
+Tags: [math, maple, number-theory]
+Purpose: To calculate the number of restricted integer partitions for any given integer and number of partitions.

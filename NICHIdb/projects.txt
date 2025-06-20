@@ -1,0 +1,29 @@
+ID: proj-webwork
+Title: WeBWorK Calculus Problem Generator
+Dates: 2014–2016
+Supervisor: Dr. Ken Luther
+Org: Valparaiso University (NSF-funded project)
+Domains: [Math, EdTech, Automation]
+Tags: [STEM, teaching, programming, LaTeX, Perl]
+Tech: Perl, LaTeX, HTML/CSS, Javascript
+Impact: Problems still used in university classrooms nationwide
+
+ID: proj-knot-theory
+Title: Extending Twist Boxes in Knot Theory
+Dates: 2015–2016
+Mentor: Dr. Paul Drube
+Venue: Poster at Valpo Undergraduate Research Celebration
+Award: Dean’s Choice
+Domains: [Topology, Graph Theory, Algebra]
+Tags: [math, theoretical, visual]
+Tech: Knot Atlas, LaTeX, Google Drive
+
+ID: proj-partitions
+Title: Integer Partition Theory REU
+Dates: Summer 2016
+Mentor: Dr. Brandt Kronholm
+Org: SUNY Potsdam (NSF-funded project)
+Tech: Maple, LaTeX
+Impact: Extended known sequences to n=20 
+Exploration: Log-concavity, restricted partition behavior
+

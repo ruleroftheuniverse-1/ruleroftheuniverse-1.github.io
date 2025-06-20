@@ -1,0 +1,225 @@
+ID: skill-sys-thinking
+Name: Systems Thinking
+Type: Skill
+Category: Cognitive
+Projects: proj-gsa-leadership, proj-thesis-moral-psych, proj-counseling-framework, proj-cv-simulation, proj-glossary-personhood
+Notes: Used for modeling distributed responsibility, cognitive architectures, and long-range planning.
+
+ID: skill-ethics-analysis
+Name: Ethical Analysis
+Type: Skill
+Category: Cognitive
+Projects: proj-thesis-moral-psych, proj-counseling-framework, proj-blog-writing, proj-cme-prep
+Notes: Developed through structured moral frameworks, particularly consequentialist and systemic lenses.
+
+ID: skill-metacognition
+Name: Metacognition & Self-Modeling
+Type: Skill
+Category: Cognitive
+Projects: proj-counseling-framework, proj-github-writing, proj-glossary-personhood
+Notes: Applied in modeling recursive and pathological self-perception in agents.
+
+ID: skill-interdisciplinary-research
+Name: Interdisciplinary Research
+Type: Skill
+Category: Cognitive
+Projects: proj-gsa-leadership, proj-cme-prep, proj-glossary-personhood, proj-thesis-moral-psych
+Notes: Synthesizes philosophy, psychology, cognitive science, and AI.
+
+ID: skill-philosophical-writing
+Name: Philosophical Writing
+Type: Skill
+Category: Communication
+Projects: proj-thesis-moral-psych, proj-blog-writing, proj-counseling-framework, proj-github-writing
+Notes: Specialized in both analytic and literary/philosophical modes.
+
+ID: skill-public-communication
+Name: Public Communication of Complex Ideas
+Type: Skill
+Category: Communication
+Projects: proj-blog-writing, proj-counseling-framework, proj-gsa-leadership
+Notes: Translating abstract frameworks into accessible, motivating narratives.
+
+ID: skill-collab-writing
+Name: Collaborative Writing and Editing
+Type: Skill
+Category: Communication
+Projects: proj-gsa-leadership, proj-cme-prep, proj-glossary-personhood
+Notes: Includes collaborative documents, grant writing, and open-source texts.
+
+ID: tool-python
+Name: Python
+Type: Tool
+Category: Technical
+Projects: proj-cv-simulation, proj-github-writing
+Notes: Used for simulation, AI model prototyping, and backend logic.
+
+ID: tool-latex
+Name: LaTeX
+Type: Tool
+Category: Technical
+Projects: proj-thesis-moral-psych, proj-glossary-personhood
+Notes: For formal, academic and structural writing formats.
+
+ID: tool-github
+Name: GitHub
+Type: Tool
+Category: Technical
+Projects: proj-github-writing, proj-cv-simulation
+Notes: Version control, documentation, and collaborative prototyping.
+
+ID: tool-markdown
+Name: Markdown
+Type: Tool
+Category: Technical
+Projects: proj-blog-writing, proj-github-writing, proj-counseling-framework, proj-glossary-personhood
+Notes: Primary format for web, blog, and GitHub-based writing.
+
+ID: tool-html-css
+Name: HTML/CSS
+Type: Tool
+Category: Technical
+Projects: proj-blog-writing, proj-github-writing
+Notes: Custom layout and presentation of text on web-based platforms.
+
+ID: tool-diagramming
+Name: Diagramming / Visual Modeling
+Type: Tool
+Category: Technical
+Projects: proj-cv-simulation, proj-glossary-personhood, proj-counseling-framework
+Notes: Includes flowcharts, systems maps, and concept networks.
+
+ID: skill-org-leadership
+Name: Organizational Leadership
+Type: Skill
+Category: Interpersonal
+Projects: proj-gsa-leadership, proj-uc-protests
+Notes: Managed interdisciplinary teams and governance bodies.
+
+ID: skill-conflict-mediation
+Name: Conflict Mediation
+Type: Skill
+Category: Interpersonal
+Projects: proj-gsa-leadership, proj-uc-protests
+Notes: De-escalated university-level disputes between faculty, students, and administration.
+
+ID: skill-deep-counseling
+Name: Deep Listening & Counseling
+Type: Skill
+Category: Interpersonal
+Projects: proj-counseling-framework, proj-blog-writing
+Notes: Introspective, philosophically informed counseling for intense or dissociative clients.
+
+ID: skill-conceptual-synthesis
+Name: Conceptual Synthesis
+Type: Skill
+Category: Cognitive
+Projects: proj-glossary-personhood, proj-thesis-moral-psych, proj-cme-prep
+Notes: Integrating diverse theories and data into unified frameworks.
+
+ID: skill-quantitative-analysis
+Name: Quantitative Analysis
+Type: Skill
+Category: Cognitive
+Projects: proj-knot-theory, proj-partitions, proj-cv-simulation
+Notes: Mathematical modeling, data-driven exploration.
+
+ID: skill-qualitative-research
+Name: Qualitative Research
+Type: Skill
+Category: Cognitive
+Projects: proj-thesis-moral-psych, proj-counseling-framework
+Notes: Interviewing, thematic coding, narrative analysis.
+
+ID: skill-curriculum-design
+Name: Curriculum Design
+Type: Skill
+Category: Cognitive
+Projects: proj-ta-uc-riverside, proj-ta-valpo
+Notes: Developing accessible, engaging content for interdisciplinary audiences.
+
+ID: skill-epistemic-clarity
+Name: Epistemic Clarity & Critical Thinking
+Type: Skill
+Category: Cognitive
+Projects: proj-philosophical-writing, proj-counseling-framework, proj-gsa-leadership
+Notes: Emphasizing clear reasoning, uncertainty management.
+
+🔧 Additional Technical Tools & Programming Languages
+ID: tool-tensorflow
+Name: TensorFlow
+Type: Tool
+Category: Technical
+Projects: proj-cv-simulation
+Notes: For beginner-level neural network prototyping and reinforcement learning.
+
+ID: tool-maple
+Name: Maple
+Type: Tool
+Category: Technical
+Projects: proj-partitions
+Notes: Computer algebra system used for combinatorics and symbolic math.
+
+ID: tool-perl
+Name: Perl
+Type: Tool
+Category: Technical
+Projects: proj-webwork
+Notes: Scripting for automation and problem generation in educational software.
+
+ID: tool-assembler8086
+Name: 8086 Assembly Language
+Type: Tool
+Category: Technical
+Projects: proj-cv-simulation
+Notes: Intermediate proficiency in low-level programming and computer architecture.
+
+ID: tool-html-css-js
+Name: JavaScript
+Type: Tool
+Category: Technical
+Projects: proj-webwork, proj-blog-writing
+Notes: Frontend interactivity and dynamic content presentation.
+
+ID: tool-git
+Name: Git
+Type: Tool
+Category: Technical
+Projects: proj-github-writing, proj-cv-simulation
+Notes: Version control and collaboration management.
+
+👥 Expanded Leadership, Organization & Communication
+ID: skill-crisis-management
+Name: Crisis & Emergency Management
+Type: Skill
+Category: Interpersonal
+Projects: proj-gsa-leadership
+Notes: Coordinating student support during COVID-19 and labor disputes.
+
+ID: skill-policy-development
+Name: Policy Development & Advocacy
+Type: Skill
+Category: Interpersonal
+Projects: proj-gsa-leadership
+Notes: Drafting and promoting institutional reforms around equity and transparency.
+
+ID: skill-community-organizing
+Name: Community Organizing
+Type: Skill
+Category: Interpersonal
+Projects: proj-mutual-aid, proj-gsa-leadership
+Notes: Mobilizing groups around shared goals, supporting marginalized voices.
+
+ID: skill-public-speaking
+Name: Public Speaking
+Type: Skill
+Category: Interpersonal
+Projects: proj-gsa-leadership, proj-ta-uc-riverside
+Notes: Delivering lectures, presentations, and public addresses with clarity and engagement.
+
+ID: skill-student-mentorship
+Name: Student Mentorship & Tutoring
+Type: Skill
+Category: Interpersonal
+Projects: proj-ta-valpo, proj-ta-uc-riverside
+Notes: Supporting learners in philosophy and math through personalized guidance.
