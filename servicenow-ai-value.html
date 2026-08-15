@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Independent outside-in ServiceNow product strategy brief and AI Value Investigation diagnostic by Nichole Smith.">
+  <title>ServiceNow AI Value Investigation | Nichole Smith</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .strategy-table { width:100%; border-collapse:collapse; margin:1rem 0 1.5rem; font-size:.92rem; }
+    .strategy-table th, .strategy-table td { border:1px solid var(--border); padding:.65rem .75rem; text-align:left; vertical-align:top; }
+    .strategy-table th { background:var(--surface-2); color:var(--text); }
+    .strategy-table td:first-child { font-weight:700; }
+    .callout { border:1px solid var(--border); background:var(--surface-2); padding:1rem 1.2rem; margin:1rem 0 1.75rem; }
+    .rule { border-left:3px solid var(--accent); padding-left:1rem; }
+    .diagnostic-line { color:var(--muted); letter-spacing:.02em; }
+    .mini { font-size:.88rem; color:var(--muted); }
+    .package-nav { display:flex; flex-wrap:wrap; gap:.75rem 1.25rem; margin-top:1.5rem; }
+    .package-nav a { font-weight:700; }
+    @media (max-width:700px) { .strategy-table { font-size:.82rem; } .strategy-table th, .strategy-table td { padding:.45rem; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-name" href="index.html">Nichole Smith</a>
+    <nav aria-label="Primary navigation">
+      <a href="index.html">Home</a>
+      <a class="active" href="research.html">Research</a>
+      <a href="writing.html">Writing</a>
+      <a href="projects.html">Projects</a>
+      <a href="cv.html">CV</a>
+      <a href="contact.html">Contact</a>
+      <a href="archive.html">Archive</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-intro">
+      <p class="eyebrow">Independent outside-in strategy · 14 August 2026</p>
+      <h1>Test the feedback loop after AI acts.</h1>
+      <p class="lede">Use a bounded paid test in IT service workflows to learn whether workflow outcomes can improve customers’ next AI-management decision—and whether ServiceNow should invest in making that loop easier.</p>
+      <div class="package-nav"><a href="#brief">Strategy brief</a><a href="#diagnostic">One-page diagnostic</a><a href="#evidence">Evidence</a></div>
+    </section>
+
+    <section class="panel" aria-labelledby="why-title">
+      <h2 id="why-title">Why this exists</h2>
+      <p>ServiceNow is increasingly turning AI from advice into action through workflows. The question I test here is what happens after action: do workflow outcomes become reusable knowledge that improves the next AI-management decision? I propose a bounded paid market test using an AI Value Investigation Case—a structured record of the decision, competing explanations, evidence, next test, and retained learning. ServiceNow is unusually positioned because the AI asset, workflow evidence, accountable people, changes, and outcomes can often be connected in one operating environment. The uncertainty is deliberate: existing ServiceNow capabilities may already close this loop, or customers may not value the remaining gap enough to pay.</p>
+    </section>
+
+    <section id="brief" aria-labelledby="brief-title">
+      <p class="eyebrow">Strategy brief</p>
+      <h2 id="brief-title">Recommended next decision</h2>
+      <div class="callout"><strong>Run a bounded paid market test—not a product or service launch—through Impact/FDE and existing platform capabilities.</strong> Precommit a small delivery-resource ceiling, use only paying design partners as demand evidence, and add no dedicated product engineering. Stop when the ceiling is reached and decide from observed evidence whether the durable answer is existing configuration, better visibility or packaging, a repeatable accelerator, automation, a product—or nothing new.</div>
+
+      <h2>Your AI strategy already gets from context to action</h2>
+      <p>Your public story is unusually consistent: AI, data, and workflows belong on one platform; AI should not just think, it should act. AI Control Tower connects strategy, governance, management, and performance, while Process Mining shows how workflows and AI agents execute and can be improved. The strategic question here begins after that action occurs.</p>
+      <p>The question is not whether your platform can “decide with context.” It is whether the results of AI-enabled work become reusable knowledge good enough to improve the next management decision about that AI: preserve it, scale it, change it, replace it, or stop.</p>
+      <p class="callout"><strong>AI acts → outcomes are observed → explanations are tested → knowledge is retained → the next AI-management decision improves.</strong></p>
+      <p>You already have pieces of this loop. Problem Management investigates causes and records lessons; Knowledge Management retains reusable resolutions; Continual Improvement Management turns improvement opportunities into governed work; Process Mining analyzes execution; AI Control Tower measures value and adoption; and the current “Identify ways to improve service” agentic workflow analyzes feedback, metrics, and trends to recommend service improvements. The market test asks whether those pieces already close the loop for AI management, whether the gap is mainly visibility or packaging, or whether customers still face a repeatable decision problem worth paying to investigate.</p>
+
+      <h2>Why start in IT service workflows</h2>
+      <p>IT service is a strong first wedge because the decisions are financially legible, the evidence is relatively rich, changes can often be reversed, and you already have a mature human-service learning loop to benchmark. The point is not that IT is proven best; it is that it lets you learn with less invention.</p>
+      <table class="strategy-table"><thead><tr><th>Why start here</th><th>Concrete advantage</th></tr></thead><tbody>
+        <tr><td>Economics are visible</td><td>Service-desk labor, employee downtime, rework, escalation, SLA exposure, and ticket cost make the management decision concrete.</td></tr>
+        <tr><td>Evidence is unusually available</td><td>Incidents, assignments, knowledge use, approvals, reopens, changes, users, AI actions, and outcomes can often be connected in the ServiceNow estate.</td></tr>
+        <tr><td>Many changes are reversible</td><td>Routing, knowledge, approvals, prompts, segmentation, and rollout cohorts can often be changed and rolled back.</td></tr>
+        <tr><td>Current practice is observable</td><td>Problem Management, process analysis, knowledge reuse, continual improvement, and service-improvement workflows provide a real benchmark rather than a straw baseline.</td></tr>
+        <tr><td>Transfer is plausible, not assumed</td><td>Customer and employee service share queues, handoffs, knowledge, rework, and measurable outcomes; paid cases must show whether the reasoning structure actually transfers.</td></tr>
+      </tbody></table>
+
+      <h2>What one AI Value Investigation does</h2>
+      <p>The market test is your experiment; each customer investigation is one observation. The working object is an <strong>AI Value Investigation Case</strong>—not a new product object. During the test it can be implemented through an existing AI Case, Problem record extension, or App Engine configuration. It keeps the decision and the learning in one place.</p>
+      <table class="strategy-table"><thead><tr><th>Move</th><th>Plain meaning</th></tr></thead><tbody>
+        <tr><td>1. Name the decision</td><td>State what could change, who owns it, the money at stake, the cost of waiting, and the realistic alternatives.</td></tr>
+        <tr><td>2. Keep explanations separate</td><td>Do not turn the strongest correlation into “the cause.” Preserve plausible technical, workflow, control, behavior, measurement, and organizational explanations.</td></tr>
+        <tr><td>3. Compare the evidence</td><td>Show what supports and weakens each explanation, what is missing, and what cannot currently be observed. Compare successful, weak, and ambiguous cases when the contrast can separate explanations.</td></tr>
+        <tr><td>4. Put explanations in action states</td><td>Enough evidence to act; priority to test; park for now; contradicted; or currently unobservable.</td></tr>
+        <tr><td>5. Decide whether learning is worth it</td><td>Ask whether the stakes and reducible uncertainty plausibly justify the cost and delay of learning. If yes, run the cheapest safe test likely to change the decision. Otherwise stop investigating.</td></tr>
+      </tbody></table>
+      <p><strong>Worked example.</strong> An AI service-desk assistant is used on most eligible incidents. Quality appears stable and overall resolution time is flat, but one business unit improves while another does not. Live explanations include harder case mix among AI users, approval delay consuming time saved, knowledge differences, and rework shifted downstream. Compare case mix, user experience, approval paths, knowledge use, reopens, and downstream work. If approval delay is consuming otherwise real gains, test the workflow—not the model. If the evidence remains weak and the next test costs more than the decision is worth, stop.</p>
+
+      <h2>The idea is allowed to lose</h2>
+      <p>A serious market test must give existing practice and competing approaches a fair chance to win. Record what each design partner would actually have done instead and compare against that—not against “no analysis.”</p>
+      <table class="strategy-table"><thead><tr><th>Alternative can win when…</th><th>What that means</th><th>Implication for you</th></tr></thead><tbody>
+        <tr><td>Existing ServiceNow loop already works</td><td>Problem Management, AI cases, Process Mining, continual improvement, service-improvement workflows, or current teams already justify the next action cheaply enough.</td><td>Use them. If customers cannot discover or assemble the capability, fix visibility, packaging, or workflow integration instead of inventing a new product.</td></tr>
+        <tr><td>Internal team or outside adviser is better</td><td>Off-platform evidence, organizational inquiry, specialist expertise, or independence dominates the case.</td><td>Route or partner. Do not force ServiceNow to own work it is poorly positioned to perform.</td></tr>
+        <tr><td>Act now</td><td>Evidence is already sufficient, the decision is reversible, or delay costs more than remaining uncertainty.</td><td>Stop investigating and act.</td></tr>
+        <tr><td>Evidence is too expensive</td><td>Data repair, interviews, semantic mapping, or access costs consume the likely value of a better decision.</td><td>Narrow the wedge or stop.</td></tr>
+      </tbody></table>
+      <p><strong>Commercial conflict.</strong> Some honest investigations should recommend no additional ServiceNow spend, a smaller AI deployment, another provider, or a non-AI answer. The market test should measure whether better-targeted expansion, trust, reusable learning, and long-run customer value outweigh the near-term revenue it deliberately gives up.</p>
+
+      <h2>Run the market test with a hard resource ceiling</h2>
+      <p>Do not invent a customer count and call it rigor. Set the maximum Impact/FDE time and customer-specific setup you are willing to spend before recruitment. Use a small number of paying design partners, no dedicated product engineering, and stop when the ceiling is reached. Only committed budget counts as demand.</p>
+      <table class="strategy-table"><thead><tr><th>Experimental layer</th><th>Commercial form</th><th>What is being tested</th></tr></thead><tbody>
+        <tr><td>Basic screen</td><td>Included</td><td>Identify the management decision, stakes, obvious measurement problems, where value appears concentrated, and whether deeper investigation has a credible chance to repay its cost. Screening, not free causal analysis.</td></tr>
+        <tr><td>Focused investigation</td><td>Paid fixed program</td><td>Use the full case method for one workflow family and a small number of approved decisions; gather quantitative and qualitative evidence and design the next justified action or test.</td></tr>
+        <tr><td>Data / tracking repair</td><td>Separate scoped work</td><td>Fix missing telemetry, workflow records, semantics, or connectors only when the expected decision value justifies the enabling work.</td></tr>
+        <tr><td>Later capacity or automation</td><td>Not authorized yet</td><td>Reserve investigation capacity or automate repeated steps only after paid demand, reuse, lower delivery cost, and better decisions are demonstrated.</td></tr>
+      </tbody></table>
+
+      <h2>The economic test is the same on both sides: beat the alternative</h2>
+      <table class="strategy-table"><thead><tr><th>Why a customer might pay</th><th>Why you might fund the test</th></tr></thead><tbody><tr><td>
+        <strong>Protect and scale real value.</strong> Learn enough about a successful pattern to preserve what matters and transfer it without copying noise.<br><br>
+        <strong>Avoid the wrong capital move.</strong> Do not replace the model when workflow, approvals, knowledge, case mix, or downstream work is consuming the gain.<br><br>
+        <strong>Act before delay becomes cost.</strong> Speed a justified change when downtime, ticket cost, specialist interruption, or foregone value is accumulating.<br><br>
+        <strong>Choose the cheapest effective answer.</strong> Better AI, process repair, deterministic automation, staffing, outsourcing, another vendor, or no action all remain live.
+      </td><td>
+        <strong>Expand subscription value where earned.</strong> Better decisions can support expansion that actually works and reduce the risk that unrealized value damages the account.<br><br>
+        <strong>Attach products only when the case earns it.</strong> If missing process data, connectors, workflow control, or improvement tracking is the proven constraint, the remedy is legitimate.<br><br>
+        <strong>Get paid to learn.</strong> Impact/FDE revenue funds market discovery instead of product speculation.<br><br>
+        <strong>Learn what to automate—or not.</strong> Repeated work earns software only if it lowers cost or improves decisions; otherwise preserve reusable methods, configurations, partner motion, and product feedback.
+      </td></tr></tbody></table>
+
+      <h2>Why you can test this without a platform bet</h2>
+      <p>Your potential advantage is not superior causal inference. It is workflow proximity: the AI asset, workflow evidence, accountable people, approved change, and later operating result can often be connected in the same operating environment. That advantage weakens when decisive evidence is off-platform, mostly qualitative, or spread across organizations you cannot observe cheaply. Those cases count against the proposition.</p>
+      <table class="strategy-table"><thead><tr><th>Role</th><th>Initial hypothesis</th></tr></thead><tbody>
+        <tr><td>Economic buyer</td><td>CIO or VP of IT Operations accountable for service-desk economics and the return on AI-enabled ITSM.</td></tr>
+        <tr><td>Operating owner</td><td>Service-desk or ITSM leader who can supply evidence, authorize workflow changes, and own the operating result.</td></tr>
+        <tr><td>Investigation partners</td><td>AI owner, analyst or process team, Impact/FDE, and control partners as needed.</td></tr>
+        <tr><td>Likely first budget</td><td>ITSM optimization, Impact/customer success, or AI transformation—not a new “causal analytics” software budget.</td></tr>
+      </tbody></table>
+
+      <h2>Measure the delta before claiming one</h2>
+      <p>Public materials establish many of the people, records, and improvement mechanisms already involved. They do not establish the end-to-end time, cost, reasoning quality, or economic outcome of post-deployment AI-management decisions. For every design partner, record the real substitute and measure both processes.</p>
+      <table class="strategy-table"><thead><tr><th>Evidence task</th><th>What to collect</th></tr></thead><tbody>
+        <tr><td>Measure the baseline</td><td>Elapsed time, active expert hours, teams involved, missing-data wait, approval delay, test cost, time to measured outcome, and which substitute actually performed the work.</td></tr>
+        <tr><td>Inspect the reasoning</td><td>Which explanations were considered? What supported and weakened them? What was never observed? Which analyses reopened? Which decisions remained unsupported?</td></tr>
+        <tr><td>Measure the money</td><td>What value was captured, protected, foregone, or lost while the decision remained unresolved? Count time savings only when they become capacity, quality, staffing, operating cost, revenue, or avoided risk.</td></tr>
+        <tr><td>Measure false certainty</td><td>How often did the structured method produce a confident causal story that later evidence weakened or contradicted? Faster decisions do not count if unsupported certainty rises.</td></tr>
+        <tr><td>Claim only the difference</td><td>The claim is not “our agent finds root causes.” It is that the structured investigation changes the action, shortens the time to a justified action, or shows that further investigation or action is not worth taking—better than the customer’s actual substitute.</td></tr>
+      </tbody></table>
+
+      <h2>Build only what paid evidence earns</h2>
+      <p>Before the test begins, agree that the following statements must become true before you authorize expansion. If they do not, narrow, repackage, partner, or stop.</p>
+      <table class="strategy-table"><thead><tr><th>Gate</th><th>Evidence before expansion</th></tr></thead><tbody>
+        <tr><td>The problem is real.</td><td>Repeated high-value AI-management decisions remain unresolved after ordinary analysis, and the delay or error costs enough to matter.</td></tr>
+        <tr><td>Customers pay.</td><td>Customers commit real budget for bounded investigations; interest without budget is not market evidence.</td></tr>
+        <tr><td>Decisions improve without more false certainty.</td><td>The method changes the action, shortens the time to a justified action, or correctly stops further action versus the best realistic substitute—without increasing unsupported causal claims.</td></tr>
+        <tr><td>Evidence is affordable.</td><td>Data, interviews, setup, and delay cost less than the plausible value of improving the decision.</td></tr>
+        <tr><td>The work repeats.</td><td>Comparable cases reuse the same case structure, evidence requests, comparisons, action states, and tests.</td></tr>
+        <tr><td>Expert cost falls.</td><td>Expert hours and correction burden fall while decision quality and neutrality hold.</td></tr>
+        <tr><td>Existing configuration or visibility is not enough.</td><td>Paid cases reveal either a repeatable capability gap or a repeatable discoverability/packaging gap worth fixing. If current products already work and customers can find them, stop.</td></tr>
+        <tr><td>You capture value within a precommitted horizon.</td><td>Paid delivery, successful expansion, justified attach, automation, reusable learning, or an intentional premium service outweigh foregone bad revenue and the cost of maintaining the motion.</td></tr>
+      </tbody></table>
+      <div class="callout"><strong>Final judgment.</strong> Spend little to learn whether AI-enabled workflow outcomes can become reusable knowledge that materially improves customers’ next AI-management decision—and whether you should own any part of that loop. Let current products, better visibility, internal teams, outside advisers, acting immediately, doing nothing, and even lower ServiceNow spend beat the idea when they are better. If paid evidence still shows a repeatable customer need, improving decisions, falling delivery cost, and a gap you are well positioned to close, then decide what durable form captures the value. If not, stop—having learned cheaply rather than built expensively.</div>
+    </section>
+
+    <section id="diagnostic" aria-labelledby="diagnostic-title">
+      <p class="eyebrow">One-page instrument</p>
+      <h2 id="diagnostic-title">AI Value Investigation Diagnostic</h2>
+      <p>Use this to decide whether an AI-enabled workflow deserves deeper investigation, structure the explanation, choose the next evidence-gathering move, and retain what was learned.</p>
+      <h3>1. Name the management decision</h3>
+      <p class="diagnostic-line"><strong>Workflow:</strong> ____________________ &nbsp; <strong>Observed result:</strong> ____________________ &nbsp; <strong>Decision owner:</strong> ____________________</p>
+      <p class="diagnostic-line"><strong>What could change:</strong> ____________________ &nbsp; <strong>Economic stakes / cost of delay:</strong> ____________________ &nbsp; <strong>Realistic substitute:</strong> ____________________</p>
+      <h3>2. Admit only cases worth learning about</h3>
+      <ul>
+        <li>Materially different actions remain plausible.</li>
+        <li>The decision can materially change cost, capacity, quality, risk, or revenue.</li>
+        <li>At least one important uncertainty can realistically be reduced.</li>
+        <li>There is a credible case that better information is worth its likely cost and delay.</li>
+        <li>Current analytics, Problem Management, internal expertise, or another available process does not already justify the next move well enough.</li>
+      </ul>
+      <p class="rule"><strong>If any answer is no:</strong> act with current evidence, use the existing process, route elsewhere, or stop investigating.</p>
+      <h3>3. Keep explanations separate</h3>
+      <table class="strategy-table"><thead><tr><th>Explanation family</th><th>Question</th><th>Action state</th></tr></thead><tbody>
+        <tr><td>AI capability</td><td>Does AI work on the cases where value matters?</td><td>________</td></tr>
+        <tr><td>Workflow</td><td>Are routing, approvals, handoffs, or rework consuming the gain?</td><td>________</td></tr>
+        <tr><td>Controls</td><td>Are review, permissions, or governance adding hidden cost or delay?</td><td>________</td></tr>
+        <tr><td>People / behavior</td><td>Who uses or avoids AI, and do incentives or trust alter the result?</td><td>________</td></tr>
+        <tr><td>Measurement / value</td><td>Does the metric reflect captured capacity, quality, cost, revenue, or risk?</td><td>________</td></tr>
+        <tr><td>Organization / context</td><td>Do case mix, staffing, local practice, or off-platform work explain the difference?</td><td>________</td></tr>
+      </tbody></table>
+      <p class="mini"><strong>Action states:</strong> Act · Test next · Park · Contradicted · Currently unobservable</p>
+      <h3>4. Compare evidence, including success</h3>
+      <p class="diagnostic-line"><strong>Evidence for:</strong> ____________________ &nbsp; <strong>Evidence against:</strong> ____________________ &nbsp; <strong>Missing / unobservable:</strong> ____________________</p>
+      <p class="diagnostic-line"><strong>Useful contrast (successful / weak / ambiguous case):</strong> __________________________________________</p>
+      <h3>5. Decide whether learning more is worth it</h3>
+      <p class="diagnostic-line"><strong>What result would change the decision:</strong> __________________________________________</p>
+      <p class="diagnostic-line"><strong>Cheapest safe evidence or intervention likely to produce it:</strong> __________________________________________</p>
+      <p class="diagnostic-line"><strong>Likely cost and delay:</strong> ____________________</p>
+      <p><strong>Choose:</strong> Act now · Run the proposed test · Gather missing evidence · Use an existing ServiceNow process · Route elsewhere · Stop investigating</p>
+      <h3>6. Retain what was learned</h3>
+      <p class="diagnostic-line"><strong>What changed the decision:</strong> __________________________________________</p>
+      <p class="diagnostic-line"><strong>What remains unresolved:</strong> __________________________________________</p>
+      <p class="diagnostic-line"><strong>Where the finding should and should not transfer:</strong> __________________________________________</p>
+      <p class="diagnostic-line"><strong>Reusable evidence request, test, workflow change, or lesson:</strong> __________________________________________</p>
+      <p class="rule"><strong>Rule:</strong> do not assign numerical confidence unless it can be calibrated. The purpose is to improve a management decision, not to manufacture a causal story.</p>
+    </section>
+
+    <section id="evidence" class="panel" aria-labelledby="evidence-title">
+      <h2 id="evidence-title">Selected ServiceNow public evidence</h2>
+      <ul>
+        <li><a href="https://www.servicenow.com/">Homepage / AI Platform positioning</a></li>
+        <li><a href="https://www.servicenow.com/docs/r/intelligent-experiences/ai-control-tower/ai-governance.html">AI Control Tower dashboard</a></li>
+        <li><a href="https://www.servicenow.com/docs/r/intelligent-experiences/ai-control-tower/edit-value-template.html">AI Control Tower value templates</a></li>
+        <li><a href="https://www.servicenow.com/products/itsm/what-is-problem-management.html">Problem Management</a></li>
+        <li><a href="https://www.servicenow.com/docs/r/it-service-management/problem-management/c_CreateKnowledge.html">Knowledge articles from problems</a></li>
+        <li><a href="https://www.servicenow.com/docs/r/it-service-management/continual-improvement-management/cim-landing-page.html">Continual Improvement Management</a></li>
+        <li><a href="https://www.servicenow.com/docs/r/intelligent-experiences/service-improvement.html">Identify ways to improve service agentic workflow</a></li>
+        <li><a href="https://www.servicenow.com/company/leadership/john-aisien.html">Central Product Management leadership</a></li>
+      </ul>
+      <p class="mini">Evidence status: independent outside-in analysis based on public materials. Current positioning and adjacent capabilities are observable; market frequency, willingness to pay, comparative decision quality, neutrality in practice, and software-scale economics are not.</p>
+    </section>
+  </main>
+
+  <footer><p>© 2026 Nichole Smith · Independent outside-in analysis.</p></footer>
+</body>
+</html>
