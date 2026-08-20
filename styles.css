@@ -87,6 +87,123 @@ dd { margin: 0 0 1rem; overflow-wrap: anywhere; }
 .entry-date { color: var(--muted); }
 .entry h3 { margin-top: .1rem; }
 
+.work-intro { max-width: 58rem; }
+.operating-pattern {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .45rem .8rem;
+  margin-top: 2rem;
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.operating-pattern span:nth-child(odd) { color: var(--text); }
+.route-note { max-width: 72ch; margin-top: 1.5rem; color: var(--muted); }
+.route-note a { font-weight: 700; }
+
+.work-case {
+  margin: 0;
+  padding: clamp(3rem, 7vw, 5rem) 0;
+  border-top: 1px solid var(--border);
+}
+.work-case:last-child { border-bottom: 1px solid var(--border); }
+.case-header { margin-bottom: 2rem; }
+.case-number {
+  margin-bottom: .65rem;
+  color: var(--accent);
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.case-header h2 { max-width: 28ch; margin-bottom: .45rem; font-size: clamp(1.8rem, 4vw, 2.7rem); }
+.case-subtitle { margin-bottom: 1.35rem; color: var(--accent-2); font-size: 1.08rem; font-weight: 700; }
+.case-thesis { max-width: 76ch; color: #cad4dc; font-size: 1.08rem; }
+
+.case-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  max-width: 52rem;
+  margin: 1.75rem 0 0;
+  padding: 1px;
+  list-style: none;
+  background: var(--border);
+}
+.case-metrics li {
+  flex: 1 1 12rem;
+  margin: 0;
+  padding: 1rem 1.1rem;
+  background: var(--surface);
+}
+.case-metrics strong { display: block; color: var(--text); font-size: 1.35rem; line-height: 1.2; }
+.case-metrics span { display: block; margin-top: .35rem; color: var(--muted); font-size: .82rem; }
+
+.case-anatomy {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  max-width: 58rem;
+  margin: 0;
+  border-top: 1px solid var(--border);
+}
+.case-anatomy dt,
+.case-anatomy dd { margin: 0; padding: 1.2rem 0; border-bottom: 1px solid var(--border); }
+.case-anatomy dt {
+  padding-right: 1.5rem;
+  color: var(--muted);
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.case-anatomy dd { max-width: 75ch; overflow-wrap: anywhere; }
+.case-evidence {
+  max-width: 58rem;
+  margin-top: 2rem;
+  padding: 1.35rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.case-evidence h3 { margin-bottom: .65rem; }
+.case-evidence p { max-width: 76ch; margin-bottom: 1rem; color: var(--muted); }
+.evidence-labels { display: flex; flex-wrap: wrap; gap: .45rem; }
+.evidence-labels span {
+  padding: .28rem .5rem;
+  border: 1px solid var(--border);
+  color: var(--accent);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.case-links { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.25rem; margin: 1.5rem 0 0; }
+
+.case-page-intro { max-width: 58rem; }
+.case-study-body { max-width: 50rem; }
+.case-study-section { margin-bottom: 0; padding: 3rem 0; border-top: 1px solid var(--border); }
+.case-study-section h2 { max-width: 28ch; }
+.case-study-section p,
+.case-study-section ul { max-width: 76ch; }
+.case-action-list,
+.case-outcome-list,
+.case-evidence-list { padding-left: 1.4rem; }
+.case-action-list li + li,
+.case-outcome-list li + li,
+.case-evidence-list li + li { margin-top: .7rem; }
+.public-boundary-note { margin-top: 1.5rem; color: var(--muted); font-size: .88rem; }
+.editorial-note {
+  margin-top: 1.5rem;
+  padding: 1rem 1.15rem;
+  border: 1px dashed var(--border);
+  color: var(--muted);
+  font-size: .88rem;
+}
+.editorial-note strong { color: var(--text); }
+.case-links-final { padding-top: 2rem; border-top: 1px solid var(--border); }
+
 footer { width: min(calc(100% - 2rem), var(--max)); margin: 0 auto; padding: 1.5rem 0 2.5rem; border-top: 1px solid var(--border); color: var(--muted); font-size: .85rem; }
 footer p { margin: 0; }
 
@@ -101,6 +218,10 @@ footer p { margin: 0; }
   .cv-meta { margin-top: 1rem; text-align: left; }
   .entry { display: block; }
   .entry-date { margin-bottom: .35rem; }
+  .case-anatomy { display: block; }
+  .case-anatomy dt { padding: 1.1rem 0 .35rem; border-bottom: 0; }
+  .case-anatomy dd { padding: 0 0 1.1rem; }
+  .case-metrics { display: grid; grid-template-columns: 1fr; }
 }
 
 @media print {
