@@ -1,0 +1,20 @@
+{
+  "name": "HESI Smoo",
+  "short_name": "HESI Smoo",
+  "description": "A calm, adaptive HESI study path for Math, Reading, and Vocabulary.",
+  "id": "./",
+  "start_url": "./#today",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f6f3fb",
+  "theme_color": "#6f56d9",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
