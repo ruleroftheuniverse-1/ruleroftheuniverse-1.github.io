@@ -43,8 +43,9 @@
         <section class="view active" id="today-view" data-view="today" aria-labelledby="today-heading">
           <div class="view-heading">
             <div>
-              <p class="eyebrow"><span id="today-label">Today</span> · <span id="days-to-target">Target week ahead</span></p>
+              <p class="eyebrow"><span id="today-label">Today</span> · <span id="days-to-target">Countdown loading</span></p>
               <h1 id="today-heading">Your first move is ready.</h1>
+              <p class="test-date-note" id="test-date-note">Tentative test · Thu, Sep. 24 · 8:30 AM</p>
             </div>
             <p class="heading-note">No choosing a resource. No building a plan. Open, start, go.</p>
           </div>
@@ -52,14 +53,14 @@
           <div class="dashboard-grid">
             <article class="next-card" aria-labelledby="next-title">
               <div class="next-card-topline">
-                <span class="now-pill">DO THIS NOW</span>
+                <span class="now-pill" id="now-pill">DO THIS NOW</span>
                 <span class="duration" id="session-duration">15 min</span>
               </div>
 
               <div class="next-card-copy">
                 <span class="subject-orb vocab-orb" aria-hidden="true">Aa</span>
                 <div>
-                  <p class="subject-label">Vocabulary retrieval</p>
+                  <p class="subject-label" id="next-subject-label">Vocabulary retrieval</p>
                   <h2 id="next-title">Start with vocabulary.</h2>
                 </div>
               </div>
@@ -69,7 +70,7 @@
               </p>
 
               <div class="capacity-picker" role="radiogroup" aria-labelledby="capacity-label">
-                <p id="capacity-label">How much brain do you have?</p>
+                <p id="capacity-label">How much HESI brain/time do you have?</p>
                 <div class="capacity-options">
                   <button type="button" role="radio" aria-checked="false" data-capacity="5">5 min</button>
                   <button class="selected" type="button" role="radio" aria-checked="true" data-capacity="15">15 min</button>
@@ -77,6 +78,12 @@
                   <button type="button" role="radio" aria-checked="false" data-capacity="full">I got this</button>
                 </div>
               </div>
+
+              <button class="ap-load-toggle" id="ap-load-toggle" type="button" aria-pressed="false">
+                <span class="ap-toggle-box" aria-hidden="true"></span>
+                <span class="ap-toggle-copy"><strong>Heavy A&amp;P day</strong><small>Protect anatomy, GPA, and functioning</small></span>
+                <span class="ap-toggle-state" id="ap-toggle-state">No</span>
+              </button>
 
               <button class="primary-button" id="start-session" type="button">
                 <span id="start-label">START 15-MIN SESSION</span>
@@ -177,27 +184,21 @@
                 <p class="section-kicker">OUTCOME BLOCKERS</p>
                 <h2 id="logistics-heading">HESI logistics</h2>
               </div>
-              <span class="count-chip" id="logistics-count">1 / 6 closed</span>
+              <span class="count-chip" id="logistics-count">2 / 4 known · 1 pending</span>
             </div>
             <p class="logistics-intro">Not study content. Still fully capable of killing the outcome.</p>
             <div class="logistics-list" id="logistics-list">
               <button class="logistics-item complete" type="button" data-logistics="sections" aria-pressed="true">
                 <span class="check-box" aria-hidden="true">✓</span><span><strong>Verify tested sections</strong><small>Math · Reading · Vocabulary</small></span>
               </button>
-              <button class="logistics-item" type="button" data-logistics="email" aria-pressed="false">
-                <span class="check-box" aria-hidden="true"></span><span><strong>Find the correct scheduling email</strong><small>Identify the actual contact</small></span>
-              </button>
-              <button class="logistics-item" type="button" data-logistics="schedule" aria-pressed="false">
-                <span class="check-box" aria-hidden="true"></span><span><strong>Schedule the HESI</strong><small>Real attempt near the end of September</small></span>
-              </button>
-              <button class="logistics-item" type="button" data-logistics="times" aria-pressed="false">
-                <span class="check-box" aria-hidden="true"></span><span><strong>Confirm date and permitted times</strong><small>Protect room for a retake before Oct. 22</small></span>
+              <button class="logistics-item pending" type="button" data-logistics="scheduling" aria-pressed="false">
+                <span class="check-box" aria-hidden="true">…</span><span><strong>Confirm the HESI appointment</strong><small>Email sent · Thu, Sep. 24 at 8:30 AM pending</small></span>
               </button>
               <button class="logistics-item" type="button" data-logistics="retake" aria-pressed="false">
-                <span class="check-box" aria-hidden="true"></span><span><strong>Confirm the retake policy</strong><small>Waiting period · attempt limits · fees</small></span>
+                <span class="check-box" aria-hidden="true"></span><span><strong>Confirm the retake window</strong><small>Waiting period · attempt limits · latest viable date</small></span>
               </button>
-              <button class="logistics-item" type="button" data-logistics="paperwork" aria-pressed="false">
-                <span class="check-box" aria-hidden="true"></span><span><strong>Send program paperwork to Nichole</strong><small>Requirements · application details · deadlines</small></span>
+              <button class="logistics-item complete" type="button" data-logistics="deadline" aria-pressed="true">
+                <span class="check-box" aria-hidden="true">✓</span><span><strong>Application deadline</strong><small>Thursday, Oct. 22</small></span>
               </button>
             </div>
           </section>
@@ -207,31 +208,50 @@
           <div class="view-heading compact-heading">
             <div>
               <p class="eyebrow">PROGRESS</p>
-              <h1 id="progress-heading">Readiness without the casino.</h1>
+              <h1 id="progress-heading">Practice evidence, not mastery theater.</h1>
             </div>
-            <p class="heading-note">No fake score estimate before the diagnostic earns one.</p>
+            <p class="heading-note">A practice result tells the app what to schedule next. It does not tell Saydee what kind of learner she is.</p>
           </div>
 
           <div class="readiness-grid">
             <article class="readiness-card">
               <div class="readiness-topline"><span>Vocabulary</span><span class="mini-orb vocab-orb">Aa</span></div>
-              <strong class="readiness-value" id="vocab-readiness">Not measured</strong>
-              <p>Complete the diagnostic before we pretend to know mastery.</p>
-              <div class="meter"><span id="vocab-meter" style="width: 8%"></span></div>
+              <strong class="readiness-value" id="vocab-readiness">No estimate yet</strong>
+              <p>A first retrieval locates work. Mastery requires successful recall across time and mixed contexts.</p>
+              <span class="evidence-tag">PRACTICE EVIDENCE ONLY</span>
             </article>
             <article class="readiness-card">
               <div class="readiness-topline"><span>Math</span><span class="mini-orb math-orb">÷</span></div>
-              <strong class="readiness-value">Baseline needed</strong>
-              <p>Current practice: Roman numerals. Weakness status is not inferred yet.</p>
-              <div class="meter"><span style="width: 5%"></span></div>
+              <strong class="readiness-value">No estimate yet</strong>
+              <p>Current practice: Roman numerals. One correct answer would still not establish retention.</p>
+              <span class="evidence-tag">PRACTICE EVIDENCE ONLY</span>
             </article>
             <article class="readiness-card">
               <div class="readiness-topline"><span>Reading</span><span class="mini-orb reading-orb">¶</span></div>
-              <strong class="readiness-value">Baseline needed</strong>
-              <p>Accuracy first. Timing becomes useful after the question model is stable.</p>
-              <div class="meter"><span style="width: 5%"></span></div>
+              <strong class="readiness-value">No estimate yet</strong>
+              <p>Accuracy first. Timing matters after repeated performance gives it something honest to measure.</p>
+              <span class="evidence-tag">PRACTICE EVIDENCE ONLY</span>
             </article>
           </div>
+
+          <aside class="mastery-rule" aria-label="How the app distinguishes practice from mastery">
+            <span aria-hidden="true">≠</span>
+            <div><strong>Diagnostic performance is not mastery.</strong><p>The future readiness model should require spaced retrieval, mixed practice, and mock performance—not one recently massed set.</p></div>
+          </aside>
+
+          <section class="admissions-guardrail" aria-labelledby="guardrail-heading">
+            <div class="guardrail-copy">
+              <p class="section-kicker">WHY THE APP SOMETIMES SAYS STOP</p>
+              <h2 id="guardrail-heading">More HESI is not always more admission value.</h2>
+              <p>HESI readiness matters, but damaging A&amp;P II or the 4.0 GPA to squeeze in another tired set would be strategically stupid.</p>
+            </div>
+            <div class="point-grid" aria-label="Relevant application point structure">
+              <div><strong>4</strong><small>HESI points</small></div>
+              <div><strong>5</strong><small>GPA points at ≥3.8</small></div>
+              <div><strong>+1</strong><small>A&amp;P II point</small></div>
+              <div><strong>12/13</strong><small>Maximum possible</small></div>
+            </div>
+          </section>
 
           <div class="progress-columns">
             <article class="panel-card">
