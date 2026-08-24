@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="HESI Smoo app icon">
+  <defs>
+    <linearGradient id="background" x1="62" y1="36" x2="448" y2="474" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#947DF0"/>
+      <stop offset="0.55" stop-color="#6F56D9"/>
+      <stop offset="1" stop-color="#4930AB"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#background)"/>
+  <circle cx="420" cy="90" r="110" fill="#FFFFFF" opacity="0.08"/>
+  <circle cx="79" cy="437" r="132" fill="#FFFFFF" opacity="0.06"/>
+  <rect x="112" y="105" width="288" height="302" rx="88" fill="#FFFDFB"/>
+  <text x="256" y="323" text-anchor="middle" fill="#5A42C0" font-family="Arial, Helvetica, sans-serif" font-size="218" font-weight="800">S</text>
+  <circle cx="178" cy="368" r="13" fill="#DC658F"/>
+  <circle cx="218" cy="368" r="13" fill="#F2C85D"/>
+  <circle cx="258" cy="368" r="13" fill="#43A789"/>
+</svg>
