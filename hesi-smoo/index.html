@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#6f56d9" />
+    <meta name="description" content="A calm, adaptive HESI study path for Math, Reading, and Vocabulary." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="HESI Smoo" />
+    <title>HESI Smoo</title>
+
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/icon.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to study plan</a>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#today" aria-label="HESI Smoo home">
+          <span class="brand-mark" aria-hidden="true">S</span>
+          <span>
+            <strong>HESI Smoo</strong>
+            <small>Math · Reading · Vocab</small>
+          </span>
+        </a>
+
+        <div class="topbar-actions">
+          <button class="install-button" id="install-button" type="button" hidden>
+            Install
+          </button>
+          <div class="target-chip" aria-label="Target score 100">
+            <span>Target</span>
+            <strong>100</strong>
+          </div>
+        </div>
+      </header>
+
+      <main id="main-content">
+        <section class="view active" id="today-view" data-view="today" aria-labelledby="today-heading">
+          <div class="view-heading">
+            <div>
+              <p class="eyebrow"><span id="today-label">Today</span> · <span id="days-to-target">Target week ahead</span></p>
+              <h1 id="today-heading">Your first move is ready.</h1>
+            </div>
+            <p class="heading-note">No choosing a resource. No building a plan. Open, start, go.</p>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="next-card" aria-labelledby="next-title">
+              <div class="next-card-topline">
+                <span class="now-pill">DO THIS NOW</span>
+                <span class="duration" id="session-duration">15 min</span>
+              </div>
+
+              <div class="next-card-copy">
+                <span class="subject-orb vocab-orb" aria-hidden="true">Aa</span>
+                <div>
+                  <p class="subject-label">Vocabulary retrieval</p>
+                  <h2 id="next-title">Start with vocabulary.</h2>
+                </div>
+              </div>
+
+              <p class="next-description">
+                Try the meaning before you reveal it. Misses and hesitation come back sooner; easy words get out of your way.
+              </p>
+
+              <div class="capacity-picker" role="radiogroup" aria-labelledby="capacity-label">
+                <p id="capacity-label">How much brain do you have?</p>
+                <div class="capacity-options">
+                  <button type="button" role="radio" aria-checked="false" data-capacity="5">5 min</button>
+                  <button class="selected" type="button" role="radio" aria-checked="true" data-capacity="15">15 min</button>
+                  <button type="button" role="radio" aria-checked="false" data-capacity="30">30 min</button>
+                  <button type="button" role="radio" aria-checked="false" data-capacity="full">I got this</button>
+                </div>
+              </div>
+
+              <button class="primary-button" id="start-session" type="button">
+                <span id="start-label">START 15-MIN SESSION</span>
+                <span aria-hidden="true">→</span>
+              </button>
+
+              <p class="after-note" id="after-note">This round is enough. More work is available, not owed.</p>
+            </article>
+
+            <aside class="study-map" aria-labelledby="route-heading">
+              <div class="section-kicker">TODAY’S ROUTE</div>
+              <h2 id="route-heading">One path. Three stopping points.</h2>
+
+              <ol class="route-list">
+                <li class="route-item current" data-route-step="vocab">
+                  <span class="route-number">1</span>
+                  <span class="route-copy">
+                    <strong>Vocab sprint</strong>
+                    <small>15 minutes · retrieval</small>
+                  </span>
+                  <span class="route-state">NOW</span>
+                </li>
+                <li class="route-item" data-route-step="math">
+                  <span class="route-number">2</span>
+                  <span class="route-copy">
+                    <strong>Math block</strong>
+                    <small>Roman numerals · until tired</small>
+                  </span>
+                  <span class="route-state">NEXT</span>
+                </li>
+                <li class="route-item" data-route-step="reading">
+                  <span class="route-number">3</span>
+                  <span class="route-copy">
+                    <strong>Reading passage</strong>
+                    <small>Main idea · if capacity remains</small>
+                  </span>
+                  <span class="route-state">OPTIONAL</span>
+                </li>
+              </ol>
+
+              <p class="permission-note"><span aria-hidden="true">✓</span> Stopping after any completed block still counts.</p>
+            </aside>
+          </div>
+
+          <aside class="learning-contract" aria-label="How HESI Smoo interprets unknown material">
+            <span class="contract-mark" aria-hidden="true">?</span>
+            <div>
+              <strong>Unknown means found.</strong>
+              <p>We are not testing whether you already know this. We are finding everything standing between you and 100, then removing it.</p>
+            </div>
+          </aside>
+
+          <section class="section-block" aria-labelledby="subjects-heading">
+            <div class="section-heading-row">
+              <div>
+                <p class="section-kicker">THE THREE SECTIONS</p>
+                <h2 id="subjects-heading">What the app is steering</h2>
+              </div>
+              <span class="prototype-tag">PROTOTYPE DATA</span>
+            </div>
+
+            <div class="subject-grid">
+              <article class="subject-card vocab-card">
+                <div class="subject-card-head">
+                  <span class="subject-icon" aria-hidden="true">Aa</span>
+                  <span class="status-dot learning">LEARNING</span>
+                </div>
+                <h3>Vocabulary</h3>
+                <p>Retrieval, spaced recurrence, and context—not rereading a Quizlet until it feels familiar.</p>
+                <div class="subject-focus"><span>Today</span><strong>3-word demo round</strong></div>
+              </article>
+
+              <article class="subject-card math-card">
+                <div class="subject-card-head">
+                  <span class="subject-icon" aria-hidden="true">÷</span>
+                  <span class="status-dot shaky">CURRENT FOCUS</span>
+                </div>
+                <h3>Math</h3>
+                <p>A visible skill map will separate unseen, learning, shaky, and solid topics.</p>
+                <div class="subject-focus"><span>Next</span><strong>Roman numerals</strong></div>
+              </article>
+
+              <article class="subject-card reading-card">
+                <div class="subject-card-head">
+                  <span class="subject-icon" aria-hidden="true">¶</span>
+                  <span class="status-dot unmeasured">UNMEASURED</span>
+                </div>
+                <h3>Reading</h3>
+                <p>Main idea, purpose, inference, detail, and tone—with accuracy before speed.</p>
+                <div class="subject-focus"><span>Later</span><strong>Set a baseline</strong></div>
+              </article>
+            </div>
+          </section>
+
+          <section class="logistics-block" aria-labelledby="logistics-heading">
+            <div class="logistics-heading">
+              <div>
+                <p class="section-kicker">OUTCOME BLOCKERS</p>
+                <h2 id="logistics-heading">HESI logistics</h2>
+              </div>
+              <span class="count-chip" id="logistics-count">1 / 6 closed</span>
+            </div>
+            <p class="logistics-intro">Not study content. Still fully capable of killing the outcome.</p>
+            <div class="logistics-list" id="logistics-list">
+              <button class="logistics-item complete" type="button" data-logistics="sections" aria-pressed="true">
+                <span class="check-box" aria-hidden="true">✓</span><span><strong>Verify tested sections</strong><small>Math · Reading · Vocabulary</small></span>
+              </button>
+              <button class="logistics-item" type="button" data-logistics="email" aria-pressed="false">
+                <span class="check-box" aria-hidden="true"></span><span><strong>Find the correct scheduling email</strong><small>Identify the actual contact</small></span>
+              </button>
+              <button class="logistics-item" type="button" data-logistics="schedule" aria-pressed="false">
+                <span class="check-box" aria-hidden="true"></span><span><strong>Schedule the HESI</strong><small>Real attempt near the end of September</small></span>
+              </button>
+              <button class="logistics-item" type="button" data-logistics="times" aria-pressed="false">
+                <span class="check-box" aria-hidden="true"></span><span><strong>Confirm date and permitted times</strong><small>Protect room for a retake before Oct. 22</small></span>
+              </button>
+              <button class="logistics-item" type="button" data-logistics="retake" aria-pressed="false">
+                <span class="check-box" aria-hidden="true"></span><span><strong>Confirm the retake policy</strong><small>Waiting period · attempt limits · fees</small></span>
+              </button>
+              <button class="logistics-item" type="button" data-logistics="paperwork" aria-pressed="false">
+                <span class="check-box" aria-hidden="true"></span><span><strong>Send program paperwork to Nichole</strong><small>Requirements · application details · deadlines</small></span>
+              </button>
+            </div>
+          </section>
+        </section>
+
+        <section class="view" id="progress-view" data-view="progress" aria-labelledby="progress-heading" hidden>
+          <div class="view-heading compact-heading">
+            <div>
+              <p class="eyebrow">PROGRESS</p>
+              <h1 id="progress-heading">Readiness without the casino.</h1>
+            </div>
+            <p class="heading-note">No fake score estimate before the diagnostic earns one.</p>
+          </div>
+
+          <div class="readiness-grid">
+            <article class="readiness-card">
+              <div class="readiness-topline"><span>Vocabulary</span><span class="mini-orb vocab-orb">Aa</span></div>
+              <strong class="readiness-value" id="vocab-readiness">Not measured</strong>
+              <p>Complete the diagnostic before we pretend to know mastery.</p>
+              <div class="meter"><span id="vocab-meter" style="width: 8%"></span></div>
+            </article>
+            <article class="readiness-card">
+              <div class="readiness-topline"><span>Math</span><span class="mini-orb math-orb">÷</span></div>
+              <strong class="readiness-value">Baseline needed</strong>
+              <p>Current practice: Roman numerals. Weakness status is not inferred yet.</p>
+              <div class="meter"><span style="width: 5%"></span></div>
+            </article>
+            <article class="readiness-card">
+              <div class="readiness-topline"><span>Reading</span><span class="mini-orb reading-orb">¶</span></div>
+              <strong class="readiness-value">Baseline needed</strong>
+              <p>Accuracy first. Timing becomes useful after the question model is stable.</p>
+              <div class="meter"><span style="width: 5%"></span></div>
+            </article>
+          </div>
+
+          <div class="progress-columns">
+            <article class="panel-card">
+              <div class="panel-heading">
+                <div>
+                  <p class="section-kicker">WEAK-POINT QUEUE</p>
+                  <h2>What comes back sooner</h2>
+                </div>
+                <span class="count-chip">1 known</span>
+              </div>
+              <ul class="queue-list">
+                <li>
+                  <span class="queue-rank">01</span>
+                  <div><strong>Roman numerals</strong><small>Current learner-identified focus</small></div>
+                  <span class="queue-action">PRACTICE</span>
+                </li>
+                <li class="muted-row">
+                  <span class="queue-rank">—</span>
+                  <div><strong>Waiting for evidence</strong><small>Diagnostic misses will populate this queue</small></div>
+                </li>
+              </ul>
+            </article>
+
+            <article class="panel-card">
+              <div class="panel-heading">
+                <div>
+                  <p class="section-kicker">RECENT WORK</p>
+                  <h2>Sessions, not streaks</h2>
+                </div>
+              </div>
+              <div class="empty-session" id="recent-session-empty">
+                <span aria-hidden="true">↗</span>
+                <div><strong>No demo session yet</strong><p>Your first completed block will appear here.</p></div>
+              </div>
+              <ul class="recent-list" id="recent-session-list" hidden></ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="coach-view" data-view="coach" aria-labelledby="coach-heading" hidden>
+          <div class="view-heading compact-heading">
+            <div>
+              <p class="eyebrow">NICHOLE MODE</p>
+              <h1 id="coach-heading">Export evidence, keep the judgment.</h1>
+            </div>
+            <p class="heading-note">The app records the pattern. Nichole still gets to notice why it happened.</p>
+          </div>
+
+          <div class="coach-grid">
+            <article class="share-card">
+              <p class="section-kicker">LATEST SUMMARY</p>
+              <h2 id="share-title">Nothing to send yet.</h2>
+              <p id="share-summary">Complete the demo round and this becomes a clean, copyable study report.</p>
+
+              <div class="share-actions">
+                <button class="secondary-button" id="copy-summary" type="button">Copy summary</button>
+                <button class="ghost-button" id="download-results" type="button">Download data</button>
+              </div>
+              <p class="privacy-note">Stored on this device unless Saydee chooses to send or export it.</p>
+            </article>
+
+            <article class="signal-card">
+              <p class="section-kicker">WHAT NICHOLE GETS</p>
+              <h2>Enough signal to intervene.</h2>
+              <ul class="signal-list">
+                <li><span>01</span><div><strong>Misses</strong><small>Which items and concepts failed</small></div></li>
+                <li><span>02</span><div><strong>Hesitation</strong><small>Hard vs. genuinely known</small></div></li>
+                <li><span>03</span><div><strong>Timing</strong><small>Where the process slows down</small></div></li>
+                <li><span>04</span><div><strong>Recurrence</strong><small>What keeps failing after review</small></div></li>
+              </ul>
+            </article>
+          </div>
+
+          <button class="text-button danger-text" id="reset-prototype" type="button">Reset prototype data</button>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" aria-label="Primary navigation">
+        <button class="nav-button active" type="button" data-nav="today" aria-current="page">
+          <span class="nav-symbol" aria-hidden="true">⌂</span>
+          <span>Today</span>
+        </button>
+        <button class="nav-button" type="button" data-nav="progress">
+          <span class="nav-symbol" aria-hidden="true">↗</span>
+          <span>Progress</span>
+        </button>
+        <button class="nav-button" type="button" data-nav="coach">
+          <span class="nav-symbol nav-initial" aria-hidden="true">N</span>
+          <span>Nichole</span>
+        </button>
+      </nav>
+    </div>
+
+    <div class="session-shell" id="session-shell" role="dialog" aria-modal="true" aria-labelledby="session-title" hidden>
+      <div class="session-frame">
+        <header class="session-header">
+          <button class="icon-button" id="close-session" type="button" aria-label="Close study session">×</button>
+          <div class="session-heading">
+            <p id="session-kind">VOCAB · DEMO ROUND</p>
+            <h2 id="session-title">Try it before you reveal it.</h2>
+          </div>
+          <span class="session-counter" id="session-counter">1 / 3</span>
+        </header>
+        <div class="session-progress" aria-hidden="true"><span id="session-progress-bar"></span></div>
+
+        <div class="session-body">
+          <section class="session-panel active" id="vocab-panel" data-session-panel="vocab">
+            <div class="study-card">
+              <p class="card-instruction">WHAT DOES THIS MEAN?</p>
+              <h3 id="vocab-word">Acute</h3>
+              <p class="example-sentence" id="vocab-example">“The symptoms had an acute onset.”</p>
+              <button class="reveal-button" id="reveal-answer" type="button">Reveal meaning</button>
+
+              <div class="answer-area" id="answer-area" hidden>
+                <div class="answer-rule"></div>
+                <p class="answer-label">MEANING</p>
+                <p class="answer-text" id="vocab-answer">Sudden in onset and often short in duration.</p>
+              </div>
+            </div>
+
+            <div class="rating-area" id="rating-area" hidden>
+              <p>How did retrieval feel?</p>
+              <div class="rating-buttons">
+                <button type="button" data-rating="again"><strong>Again</strong><small>Missed it</small></button>
+                <button type="button" data-rating="hard"><strong>Hard</strong><small>Hesitated</small></button>
+                <button type="button" data-rating="got-it"><strong>Got it</strong><small>Knew it</small></button>
+              </div>
+            </div>
+          </section>
+
+          <section class="session-panel" id="vocab-complete-panel" data-session-panel="vocab-complete" hidden>
+            <div class="completion-card">
+              <span class="completion-mark" aria-hidden="true">✓</span>
+              <p class="section-kicker">BLOCK COMPLETE</p>
+              <h3 id="vocab-completion-title">Nice—we found things worth learning.</h3>
+              <p id="vocab-result-copy">The app now knows which demo words should return sooner.</p>
+              <div class="completion-stats" id="vocab-stats"></div>
+              <button class="primary-button" id="continue-math" type="button"><span>FINISH TODAY</span><span>✓</span></button>
+              <button class="text-button" id="stop-after-vocab" type="button">I found more brain → Math</button>
+            </div>
+          </section>
+
+          <section class="session-panel" id="math-panel" data-session-panel="math" hidden>
+            <div class="study-card math-question-card">
+              <p class="card-instruction">ROMAN NUMERALS · PROTOTYPE ITEM</p>
+              <h3>IV = ?</h3>
+              <div class="choice-grid" id="math-choices">
+                <button type="button" data-math-answer="6">6</button>
+                <button type="button" data-math-answer="4">4</button>
+                <button type="button" data-math-answer="9">9</button>
+              </div>
+              <div class="feedback-box" id="math-feedback" role="status" hidden></div>
+            </div>
+            <button class="primary-button" id="math-next" type="button" hidden><span>MATH BLOCK DONE</span><span>→</span></button>
+          </section>
+
+          <section class="session-panel" id="capacity-panel" data-session-panel="capacity" hidden>
+            <div class="completion-card capacity-card">
+              <span class="completion-mark math-completion" aria-hidden="true">✓</span>
+              <p class="section-kicker">SECOND STOPPING POINT</p>
+              <h3>Math is done. Any gas left?</h3>
+              <p>Reading is useful, not mandatory. Pick the truthful answer.</p>
+              <button class="primary-button" id="continue-reading" type="button"><span>YES · ONE PASSAGE</span><span>→</span></button>
+              <button class="secondary-button full-width" id="finish-after-math" type="button">Nope · finish today</button>
+            </div>
+          </section>
+
+          <section class="session-panel" id="reading-panel" data-session-panel="reading" hidden>
+            <div class="reading-card-inner">
+              <p class="card-instruction">MAIN IDEA · PROTOTYPE PASSAGE</p>
+              <p class="passage">
+                A reliable study system does more than collect resources. It decides which task matters now, records what happened, and uses that evidence to choose the next task. This reduces wasted effort while keeping human judgment available when the pattern is unclear.
+              </p>
+              <h3>What is the passage mainly arguing?</h3>
+              <div class="reading-choices" id="reading-choices">
+                <button type="button" data-reading-answer="resources">Students need more study resources.</button>
+                <button type="button" data-reading-answer="orchestration">A study system should orchestrate work using evidence.</button>
+                <button type="button" data-reading-answer="automation">Human judgment should be removed from studying.</button>
+              </div>
+              <div class="feedback-box" id="reading-feedback" role="status" hidden></div>
+            </div>
+            <button class="primary-button" id="reading-next" type="button" hidden><span>FINISH SESSION</span><span>→</span></button>
+          </section>
+
+          <section class="session-panel" id="session-complete-panel" data-session-panel="complete" hidden>
+            <div class="completion-card final-card">
+              <span class="completion-mark final-mark" aria-hidden="true">♥</span>
+              <p class="section-kicker">TODAY IS CLOSED</p>
+              <h3 id="final-title">Useful work: complete.</h3>
+              <p id="final-copy">The result is saved on this device and ready for Nichole mode.</p>
+              <div class="final-summary" id="final-summary"></div>
+              <button class="primary-button" id="return-today" type="button"><span>BACK TO TODAY</span><span>✓</span></button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
