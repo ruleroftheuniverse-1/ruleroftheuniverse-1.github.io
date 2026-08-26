@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17324d">
+  <meta name="description" content="Fast, mobile-friendly links to Northwest Indiana storm recovery help: SNAP food replacement, housing, damage reporting, food, shelter, charging, cleanup, and power updates.">
+  <meta property="og:title" content="Northwest Indiana Storm Recovery Help">
+  <meta property="og:description" content="SNAP replacement deadline, housing and damage assistance, and current Northwest Indiana recovery resources.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ruleroftheuniverse-1.github.io/nwi-help/">
+  <title>Northwest Indiana Storm Recovery Help</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17212b;
+      --muted: #51606d;
+      --paper: #f7f4ed;
+      --white: #ffffff;
+      --navy: #17324d;
+      --blue: #e7f1f8;
+      --amber: #ffd66b;
+      --amber-dark: #6d4600;
+      --red: #a52b2b;
+      --border: #cad3da;
+      --shadow: 0 8px 24px rgba(23, 50, 77, .09);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    a { color: #075a91; text-underline-offset: .18em; }
+    a:hover { color: #003f68; }
+    a:focus-visible { outline: 3px solid #176fa5; outline-offset: 3px; }
+    h1, h2, h3 { line-height: 1.12; margin-top: 0; }
+    h1 { margin-bottom: .65rem; font-size: clamp(2.15rem, 9vw, 4rem); letter-spacing: -.045em; }
+    h2 { margin-bottom: 1rem; font-size: clamp(1.55rem, 5vw, 2.2rem); }
+    h3 { margin-bottom: .45rem; font-size: 1.15rem; }
+    p { margin-top: 0; }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: .5rem;
+      z-index: 10;
+      padding: .7rem 1rem;
+      background: var(--white);
+      color: var(--ink);
+      font-weight: 800;
+    }
+    .skip-link:focus { left: .5rem; }
+    .topbar { background: var(--navy); color: var(--white); }
+    .topbar-inner, main, footer {
+      width: min(calc(100% - 1.5rem), 52rem);
+      margin: 0 auto;
+    }
+    .topbar-inner { padding: .75rem 0; font-size: .88rem; font-weight: 700; }
+    header { padding: 2.2rem 0 1.1rem; }
+    .eyebrow {
+      margin-bottom: .55rem;
+      color: var(--navy);
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .lede { max-width: 48rem; color: var(--muted); font-size: 1.12rem; }
+    .verified { margin-bottom: 0; color: var(--muted); font-size: .9rem; }
+    main { padding-bottom: 4rem; }
+    section { margin-top: 2.6rem; scroll-margin-top: 1rem; }
+
+    .alert {
+      margin-top: 1rem;
+      padding: clamp(1.25rem, 5vw, 2rem);
+      border: 3px solid #cb8c00;
+      border-radius: .7rem;
+      background: var(--amber);
+      box-shadow: var(--shadow);
+    }
+    .alert .deadline {
+      margin-bottom: .5rem;
+      color: var(--amber-dark);
+      font-size: clamp(1.45rem, 6vw, 2.3rem);
+      font-weight: 900;
+      line-height: 1.05;
+      text-transform: uppercase;
+    }
+    .alert p:last-child { margin-bottom: 0; }
+    .button-row { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1rem; }
+    .button {
+      display: inline-flex;
+      min-height: 3rem;
+      align-items: center;
+      justify-content: center;
+      padding: .72rem 1rem;
+      border: 2px solid var(--navy);
+      border-radius: .42rem;
+      background: var(--navy);
+      color: var(--white);
+      font-weight: 800;
+      text-align: center;
+      text-decoration: none;
+    }
+    .button:hover { background: #0e2438; color: var(--white); }
+    .button.secondary { background: var(--white); color: var(--navy); }
+    .button.secondary:hover { background: #edf3f7; color: var(--navy); }
+
+    .triage, .resource-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; }
+    .card {
+      padding: 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: .65rem;
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+    .card.urgent { border-top: 5px solid var(--red); }
+    .card.action { border-top: 5px solid #176fa5; }
+    .card p:last-child, .card ul:last-child { margin-bottom: 0; }
+    .number {
+      display: inline-flex;
+      width: 1.75rem;
+      height: 1.75rem;
+      margin-right: .35rem;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--white);
+      font-size: .9rem;
+      font-weight: 850;
+    }
+    .callout {
+      padding: 1rem 1.1rem;
+      border-left: 5px solid #176fa5;
+      background: var(--blue);
+    }
+    .callout.warning { border-color: var(--red); background: #fae9e7; }
+    .callout p:last-child { margin-bottom: 0; }
+    .plain-list { margin: 0; padding-left: 1.2rem; }
+    .plain-list li + li { margin-top: .75rem; }
+    .site-list { display: grid; gap: .75rem; }
+    .site {
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: .55rem;
+      background: var(--white);
+    }
+    .site p { margin-bottom: .25rem; }
+    .site p:last-child { margin-bottom: 0; }
+    .date { color: var(--navy); font-size: .8rem; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; }
+    .fine-print { color: var(--muted); font-size: .88rem; }
+    .source-line { margin-top: 1rem; color: var(--muted); font-size: .88rem; }
+    .update-box {
+      padding: 1.25rem;
+      border: 2px dashed #8193a1;
+      border-radius: .65rem;
+      background: var(--white);
+    }
+    footer { padding: 1.5rem 0 2.5rem; border-top: 1px solid var(--border); color: var(--muted); font-size: .86rem; }
+    footer p { margin-bottom: .4rem; }
+
+    @media (max-width: 680px) {
+      .triage, .resource-grid { grid-template-columns: 1fr; }
+      .button-row { display: grid; grid-template-columns: 1fr; }
+      .button { width: 100%; }
+      header { padding-top: 1.5rem; }
+      section { margin-top: 2.2rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    @media print {
+      body { background: #fff; }
+      .topbar { background: #fff; color: #000; border-bottom: 1px solid #999; }
+      .card, .alert { box-shadow: none; break-inside: avoid; }
+      .button { border: 1px solid #000; background: #fff; color: #000; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to help</a>
+  <div class="topbar"><div class="topbar-inner">Community-made quick guide · Links go to government and relief-organization sources</div></div>
+
+  <main id="main">
+    <header>
+      <p class="eyebrow">August 2026 storm recovery</p>
+      <h1>Northwest Indiana recovery help</h1>
+      <p class="lede">Fast routes to replacement food benefits, emergency housing, damage assistance, shelter, food, charging, cleanup, and power information.</p>
+      <p class="verified"><strong>Last verified:</strong> Aug. 25, 2026 at 10 p.m. CT. Resources can change or run out—check before traveling.</p>
+    </header>
+
+    <section class="alert" aria-labelledby="snap-title">
+      <p class="deadline" id="snap-title">SNAP replacement deadline: Aug. 31</p>
+      <p><strong>Already receive SNAP and lost food because of an outage, flooding, or storm damage?</strong> Submit Indiana State Form 40988 by Monday, Aug. 31. The loss must be verified.</p>
+      <div class="button-row">
+        <a class="button" href="https://forms.in.gov/download.aspx?id=5018">Download Form 40988</a>
+        <a class="button secondary" href="https://fssabenefits.in.gov/bp/">Upload through FSSA</a>
+      </div>
+      <p class="fine-print"><strong>Other submission routes:</strong> fax to <a href="tel:+18884369199">888-436-9199</a> or take the form to a <a href="https://www.in.gov/fssa/dfr/ebt-hoosier-works-card/find-my-local-dfr-office/">Division of Family Resources office</a>. Questions: <a href="tel:+18004030864">800-403-0864</a>.</p>
+    </section>
+
+    <section aria-labelledby="start-title">
+      <h2 id="start-title">Start with what you need</h2>
+      <div class="triage">
+        <article class="card action">
+          <h3>Food, water, shelter, charging, or cleanup</h3>
+          <p>Call <a href="tel:211"><strong>211</strong></a> or <a href="tel:+18662119966"><strong>866-211-9966</strong></a>, text your ZIP code to <a href="sms:898211"><strong>898-211</strong></a>, or search online.</p>
+          <p><a href="https://in211.org/"><strong>Search Indiana 211</strong></a></p>
+        </article>
+
+        <article class="card urgent">
+          <h3>Completely displaced from home</h3>
+          <p>Call <a href="tel:211"><strong>211</strong></a> and ask to be screened for <strong>IHCDA temporary housing assistance</strong>.</p>
+          <p class="fine-print">Approved households choose either a hotel stay of up to 30 days or rental help with an application fee, limited first-month rent, and a security deposit. Payments go to the hotel or landlord.</p>
+        </article>
+
+        <article class="card action">
+          <h3>Lake or Porter County home damage</h3>
+          <p><span class="number">1</span><strong>Report the damage.</strong> This helps document the disaster but is not an aid application.</p>
+          <p><a href="https://in211.communityos.org/IDHS_Disaster_Damage_Reporting_Tool">Report damage through Indiana 211</a></p>
+          <p><span class="number">2</span><strong>Apply separately for state aid.</strong></p>
+          <p><a href="https://app.smartsheet.com/b/form/01a019f5a4457f0495bbef680cff9c75">Apply for State Disaster Relief</a></p>
+        </article>
+
+        <article class="card action">
+          <h3>State disaster assistance</h3>
+          <p>Qualifying households may receive <strong>up to $5,000</strong> for certain uninsured damage to a primary residence.</p>
+          <p class="fine-print">Eligible items can include certain home repairs, essential appliances and furnishings, debris removal, medical devices, tools, and transportation. Local-disaster-declaration and other eligibility limits apply.</p>
+          <p><a href="https://on.in.gov/August2026Disaster"><strong>Read the official August disaster hub</strong></a></p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="locations-title">
+      <h2 id="locations-title">Shelter and immediate local help</h2>
+      <div class="callout">
+        <p><strong>Do not assume an old social post is still accurate.</strong> Confirm availability before traveling, especially for food and water distributions that may end when supplies run out.</p>
+      </div>
+      <div class="site-list" style="margin-top: 1rem">
+        <article class="site">
+          <p class="date">Gary · listed 24/7</p>
+          <h3>Hudson Campbell Sports &amp; Fitness Center</h3>
+          <p>455 Massachusetts St., Gary</p>
+          <p class="fine-print">Overnight Red Cross shelter; the current official regional list identifies it as pet-friendly.</p>
+        </article>
+        <article class="site">
+          <p class="date">Hobart · listed 24 hours</p>
+          <h3>Veterans Elementary at Mundell</h3>
+          <p>52 N. Wisconsin St., Hobart</p>
+        </article>
+        <article class="site">
+          <p class="date">Valparaiso · call ahead</p>
+          <h3>Daybreak Shelter</h3>
+          <p>500 Don Hovey Dr., Valparaiso</p>
+          <p><a href="tel:+12199394187">219-939-4187</a> or <a href="tel:+12195101801">219-510-1801</a></p>
+        </article>
+      </div>
+      <div class="button-row">
+        <a class="button" href="https://idhs.maps.arcgis.com/apps/dashboards/1066ea0e9bb947d4aa2a698151259bcc">Open shelters &amp; centers map</a>
+        <a class="button secondary" href="https://portagein.gov/DocumentCenter/View/6866/August-2026-Storm-Relief-Resources-3">Full official NWI resource list</a>
+        <a class="button secondary" href="https://www.gary.gov/stormrecovery">Gary recovery updates</a>
+      </div>
+    </section>
+
+    <section aria-labelledby="food-title">
+      <h2 id="food-title">Upcoming food distributions</h2>
+      <p class="fine-print">Listed in the official regional resource guide updated Aug. 25 at 1 p.m. Supplies and hours can change.</p>
+      <div class="site-list">
+        <article class="site">
+          <p class="date">Wednesday, Aug. 26 · 10 a.m.</p>
+          <h3>Boys &amp; Girls Club</h3>
+          <p>723 Long Run Road, South Haven</p>
+        </article>
+        <article class="site">
+          <p class="date">Wednesday, Aug. 26 · 4–6 p.m.</p>
+          <h3>V1 Church</h3>
+          <p>6322 Portage Ave., Portage</p>
+        </article>
+        <article class="site">
+          <p class="date">Thursday, Aug. 27 · 9–11 a.m.</p>
+          <h3>Nativity of Our Savior</h3>
+          <p>2449 Willowcreek Road, Portage</p>
+        </article>
+        <article class="site">
+          <p class="date">Thursday, Aug. 27 · 10 a.m.–noon</p>
+          <h3>Portage Township Food Pantry</h3>
+          <p>3590 Willowcreek Road, Portage</p>
+        </article>
+        <article class="site">
+          <p class="date">Thursday, Aug. 27 · noon</p>
+          <h3>St. Teresa of Avila</h3>
+          <p>1604 E. Lincolnway, Valparaiso</p>
+        </article>
+        <article class="site">
+          <p class="date">Saturday, Aug. 29 · 9 a.m.</p>
+          <h3>Food Bank of Northwest Indiana</h3>
+          <p>6490 Broadway, Merrillville</p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="recovery-title">
+      <h2 id="recovery-title">Financial, repair, and recovery organizations</h2>
+      <div class="resource-grid">
+        <article class="card">
+          <h3>Catholic Charities</h3>
+          <p>Emergency assistance for affected low- to moderate-income households, including replacement food, essential appliances or repairs, utilities or housing, and insurance deductibles when funding and eligibility allow.</p>
+          <p><a href="tel:+12198863549">219-886-3549, option 2</a><br><a href="https://www.catholic-charities.org/">Catholic Charities storm relief</a></p>
+        </article>
+        <article class="card">
+          <h3>Habitat for Humanity NWI</h3>
+          <p>Critical-home-repair intake. The official regional list identifies mold remediation, sump-pump replacement, and insurance-deductible assistance.</p>
+          <p><a href="tel:+12199237265">219-923-7265</a><br><a href="https://nwihabitat.org/critical-home-repair.html">Check eligibility</a></p>
+        </article>
+        <article class="card">
+          <h3>Salvation Army NWI</h3>
+          <p>Food and hydration response plus emergency rent, utility, and housing support, depending on location and available funds.</p>
+          <p><a href="tel:+12198380380">219-838-0380</a><br><a href="https://www.salvationarmyusa.org/usa-central-territory/indiana/northwest-indiana-area-command/">Northwest Indiana Area Command</a></p>
+        </article>
+        <article class="card">
+          <h3>American Red Cross</h3>
+          <p>Shelter and disaster-recovery assistance. The Red Cross directory can also search by ZIP code and need.</p>
+          <p><a href="tel:+18007332767">800-733-2767</a><br><a href="https://www.redcross.org/get-help/disaster-relief-and-recovery-services.html">Get Red Cross help</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="power-title">
+      <h2 id="power-title">Power and safety</h2>
+      <div class="resource-grid">
+        <article class="card">
+          <h3>NIPSCO outage status</h3>
+          <p>Use the live page for current restoration information rather than screenshots or old outage counts.</p>
+          <p><a href="https://www.nipsco.com/outages/power-outages"><strong>Check NIPSCO status</strong></a></p>
+        </article>
+        <article class="card urgent">
+          <h3>Downed power line</h3>
+          <p>Stay away and report it to NIPSCO at <a href="tel:+18004647726"><strong>800-464-7726</strong></a>. If anyone is in immediate danger, call <a href="tel:911"><strong>911</strong></a>.</p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="before-title">
+      <h2 id="before-title">Before applying or cleaning up</h2>
+      <ul class="plain-list">
+        <li>Take photos and video when it is safe.</li>
+        <li>Keep receipts for repairs, temporary housing, cleanup, and replacement items.</li>
+        <li>Contact your insurer promptly if you have coverage.</li>
+        <li>Do not pay anyone claiming to be FEMA or disaster-assessment personnel.</li>
+      </ul>
+      <div class="callout warning" style="margin-top: 1rem">
+        <p><strong>FEMA individual assistance is not open yet.</strong> As of this page’s verification time, Indiana’s major-disaster request was still pending. Do not submit a FEMA application unless the state announces approval.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="update-title">
+      <div class="update-box">
+        <h2 id="update-title">Know an active resource?</h2>
+        <p>Send the exact location, date, hours, what is available, and a link or image from the organizer. Unverified rumors will not be posted.</p>
+        <a class="button" href="mailto:nichiyes@gmail.com?subject=NWI%20storm%20resource%20update">Send a resource update</a>
+      </div>
+    </section>
+
+    <p class="source-line">Primary sources: Indiana Department of Homeland Security, Indiana 211, City of Portage, City of Gary, NIPSCO, and the relief organizations linked above. This is an unofficial community guide, not a government service.</p>
+  </main>
+
+  <footer>
+    <p><strong>Northwest Indiana Storm Recovery Help</strong></p>
+    <p>Community-maintained by Nichole Smith · <a href="../contact.html">Contact</a></p>
+  </footer>
+</body>
+</html>
