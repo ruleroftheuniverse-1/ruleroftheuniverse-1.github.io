@@ -93,6 +93,52 @@ a:focus-visible {
   padding: 0 24px 112px;
 }
 
+/* Today is deliberately one decision: begin the suggested study block. */
+#today-view .view-heading,
+#today-view .study-map,
+#today-view .learning-contract,
+#today-view .section-block,
+#today-view .logistics-block,
+.topbar,
+.main-nav,
+.bottom-nav {
+  display: none;
+}
+
+#today-view {
+  width: min(100%, 680px);
+  margin: 0 auto;
+  padding-top: max(8vh, 56px);
+}
+
+#today-view .dashboard-grid {
+  display: block;
+}
+
+#today-view .next-card {
+  min-height: 0;
+}
+
+#today-view .topic-override {
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 20px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+#today-view .topic-override h2 {
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+}
+
+#today-view .topic-picker {
+  width: 100%;
+}
+
 .topbar {
   display: flex;
   align-items: center;
