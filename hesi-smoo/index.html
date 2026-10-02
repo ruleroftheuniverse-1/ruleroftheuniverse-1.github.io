@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="fish-ambient" aria-hidden="true">
+      <span class="fish-bubble bubble-one"></span><span class="fish-bubble bubble-two"></span>
+      <span class="fish-food" id="fish-food"></span>
+      <span class="fishy" id="fishy"><span class="fish-tail"></span><span class="fish-eye"></span><span class="fish-fin"></span></span>
+    </div>
     <a class="skip-link" href="#main-content">Skip to study plan</a>
 
     <div class="app-shell">
@@ -463,6 +468,7 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
+    <script src="topic.js" defer></script>
     <script src="app.js" defer></script>
   </body>
 </html>
