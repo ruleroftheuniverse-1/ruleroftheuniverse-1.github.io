@@ -110,7 +110,7 @@
                   <span class="route-number">2</span>
                   <span class="route-copy">
                     <strong>Math block</strong>
-                    <small>Roman numerals · until tired</small>
+                    <small>Fractions · decimals · percent</small>
                   </span>
                   <span class="route-state">NEXT</span>
                 </li>
@@ -136,13 +136,52 @@
             </div>
           </aside>
 
+          <section class="topic-override" aria-labelledby="topic-override-heading">
+            <div>
+              <p class="section-kicker">TAKE THE WHEEL</p>
+              <h2 id="topic-override-heading">Need a particular thing?</h2>
+              <p>The route above is the default. This is for when Saydee already knows what needs attention.</p>
+            </div>
+            <details class="topic-picker">
+              <summary>Choose a topic</summary>
+              <div class="topic-groups">
+                <div class="topic-group">
+                  <strong>Vocabulary</strong>
+                  <button type="button" data-study-topic="vocab">Retrieval queue</button>
+                </div>
+                <div class="topic-group">
+                  <strong>Math</strong>
+                  <div class="topic-buttons">
+                    <button type="button" data-study-topic="math:Fraction conversion">Fractions</button>
+                    <button type="button" data-study-topic="math:Decimal operations">Decimals</button>
+                    <button type="button" data-study-topic="math:Percent">Percent</button>
+                    <button type="button" data-study-topic="math:Ratios and proportions">Ratios</button>
+                    <button type="button" data-study-topic="math:Conversions">Conversions</button>
+                    <button type="button" data-study-topic="math:Rates">Rates</button>
+                    <button type="button" data-study-topic="math:Equations">Equations</button>
+                  </div>
+                </div>
+                <div class="topic-group">
+                  <strong>Reading</strong>
+                  <div class="topic-buttons">
+                    <button type="button" data-study-topic="reading:Main idea">Main idea</button>
+                    <button type="button" data-study-topic="reading:Author’s purpose">Purpose</button>
+                    <button type="button" data-study-topic="reading:Inference">Inference</button>
+                    <button type="button" data-study-topic="reading:Supporting detail">Detail</button>
+                    <button type="button" data-study-topic="reading:Tone">Tone</button>
+                  </div>
+                </div>
+              </div>
+            </details>
+          </section>
+
           <section class="section-block" aria-labelledby="subjects-heading">
             <div class="section-heading-row">
               <div>
                 <p class="section-kicker">THE THREE SECTIONS</p>
                 <h2 id="subjects-heading">What the app is steering</h2>
               </div>
-              <span class="prototype-tag">PROTOTYPE DATA</span>
+              <span class="prototype-tag">CONTENT PACK 01</span>
             </div>
 
             <div class="subject-grid">
@@ -153,7 +192,7 @@
                 </div>
                 <h3>Vocabulary</h3>
                 <p>Retrieval, spaced recurrence, and context—not rereading a Quizlet until it feels familiar.</p>
-                <div class="subject-focus"><span>Today</span><strong>3-word demo round</strong></div>
+                <div class="subject-focus"><span>Today</span><strong>Retrieval round · adaptive queue</strong></div>
               </article>
 
               <article class="subject-card math-card">
@@ -162,8 +201,8 @@
                   <span class="status-dot shaky">CURRENT FOCUS</span>
                 </div>
                 <h3>Math</h3>
-                <p>A visible skill map will separate unseen, learning, shaky, and solid topics.</p>
-                <div class="subject-focus"><span>Next</span><strong>Roman numerals</strong></div>
+                <p>Original, worked problems targeted at procedures—not a pile of facts to reread.</p>
+                <div class="subject-focus"><span>Next</span><strong>Fractions · decimals · percent</strong></div>
               </article>
 
               <article class="subject-card reading-card">
@@ -173,7 +212,7 @@
                 </div>
                 <h3>Reading</h3>
                 <p>Main idea, purpose, inference, detail, and tone—with accuracy before speed.</p>
-                <div class="subject-focus"><span>Later</span><strong>Set a baseline</strong></div>
+                <div class="subject-focus"><span>Later</span><strong>One original passage</strong></div>
               </article>
             </div>
           </section>
@@ -222,13 +261,13 @@
             </article>
             <article class="readiness-card">
               <div class="readiness-topline"><span>Math</span><span class="mini-orb math-orb">÷</span></div>
-              <strong class="readiness-value">No estimate yet</strong>
-              <p>Current practice: Roman numerals. One correct answer would still not establish retention.</p>
+              <strong class="readiness-value" id="math-readiness">No estimate yet</strong>
+              <p>Current focus starts with fraction, decimal, and percent procedures. A correct answer is evidence, not a graduation certificate.</p>
               <span class="evidence-tag">PRACTICE EVIDENCE ONLY</span>
             </article>
             <article class="readiness-card">
               <div class="readiness-topline"><span>Reading</span><span class="mini-orb reading-orb">¶</span></div>
-              <strong class="readiness-value">No estimate yet</strong>
+              <strong class="readiness-value" id="reading-readiness">No estimate yet</strong>
               <p>Accuracy first. Timing matters after repeated performance gives it something honest to measure.</p>
               <span class="evidence-tag">PRACTICE EVIDENCE ONLY</span>
             </article>
@@ -260,19 +299,9 @@
                   <p class="section-kicker">WEAK-POINT QUEUE</p>
                   <h2>What comes back sooner</h2>
                 </div>
-                <span class="count-chip">1 known</span>
+                <span class="count-chip" id="queue-count">Starting map</span>
               </div>
-              <ul class="queue-list">
-                <li>
-                  <span class="queue-rank">01</span>
-                  <div><strong>Roman numerals</strong><small>Current learner-identified focus</small></div>
-                  <span class="queue-action">PRACTICE</span>
-                </li>
-                <li class="muted-row">
-                  <span class="queue-rank">—</span>
-                  <div><strong>Waiting for evidence</strong><small>Diagnostic misses will populate this queue</small></div>
-                </li>
-              </ul>
+              <ul class="queue-list" id="weak-queue"></ul>
             </article>
 
             <article class="panel-card">
@@ -284,7 +313,7 @@
               </div>
               <div class="empty-session" id="recent-session-empty">
                 <span aria-hidden="true">↗</span>
-                <div><strong>No demo session yet</strong><p>Your first completed block will appear here.</p></div>
+                <div><strong>No session yet</strong><p>Your first completed block will appear here.</p></div>
               </div>
               <ul class="recent-list" id="recent-session-list" hidden></ul>
             </article>
@@ -304,7 +333,7 @@
             <article class="share-card">
               <p class="section-kicker">LATEST SUMMARY</p>
               <h2 id="share-title">Nothing to send yet.</h2>
-              <p id="share-summary">Complete the demo round and this becomes a clean, copyable study report.</p>
+              <p id="share-summary">Complete a session and this becomes a clean, copyable study report.</p>
 
               <div class="share-actions">
                 <button class="secondary-button" id="copy-summary" type="button">Copy summary</button>
@@ -387,7 +416,7 @@
               <span class="completion-mark" aria-hidden="true">✓</span>
               <p class="section-kicker">BLOCK COMPLETE</p>
               <h3 id="vocab-completion-title">Nice—we found things worth learning.</h3>
-              <p id="vocab-result-copy">The app now knows which demo words should return sooner.</p>
+              <p id="vocab-result-copy">The app now knows which words should return sooner.</p>
               <div class="completion-stats" id="vocab-stats"></div>
               <button class="primary-button" id="continue-math" type="button"><span>FINISH TODAY</span><span>✓</span></button>
               <button class="text-button" id="stop-after-vocab" type="button">I found more brain → Math</button>
@@ -396,16 +425,13 @@
 
           <section class="session-panel" id="math-panel" data-session-panel="math" hidden>
             <div class="study-card math-question-card">
-              <p class="card-instruction">ROMAN NUMERALS · PROTOTYPE ITEM</p>
-              <h3>IV = ?</h3>
+              <p class="card-instruction" id="math-instruction">MATH · APPLICATION PRACTICE</p>
+              <h3 id="math-prompt">Loading question…</h3>
               <div class="choice-grid" id="math-choices">
-                <button type="button" data-math-answer="6">6</button>
-                <button type="button" data-math-answer="4">4</button>
-                <button type="button" data-math-answer="9">9</button>
               </div>
               <div class="feedback-box" id="math-feedback" role="status" hidden></div>
             </div>
-            <button class="primary-button" id="math-next" type="button" hidden><span>MATH BLOCK DONE</span><span>→</span></button>
+            <button class="primary-button" id="math-next" type="button" hidden><span>NEXT MATH ITEM</span><span>→</span></button>
           </section>
 
           <section class="session-panel" id="capacity-panel" data-session-panel="capacity" hidden>
@@ -421,15 +447,10 @@
 
           <section class="session-panel" id="reading-panel" data-session-panel="reading" hidden>
             <div class="reading-card-inner">
-              <p class="card-instruction">MAIN IDEA · PROTOTYPE PASSAGE</p>
-              <p class="passage">
-                A reliable study system does more than collect resources. It decides which task matters now, records what happened, and uses that evidence to choose the next task. This reduces wasted effort while keeping human judgment available when the pattern is unclear.
-              </p>
-              <h3>What is the passage mainly arguing?</h3>
+              <p class="card-instruction" id="reading-instruction">READING · APPLICATION PRACTICE</p>
+              <p class="passage" id="reading-passage"></p>
+              <h3 id="reading-prompt">Loading question…</h3>
               <div class="reading-choices" id="reading-choices">
-                <button type="button" data-reading-answer="resources">Students need more study resources.</button>
-                <button type="button" data-reading-answer="orchestration">A study system should orchestrate work using evidence.</button>
-                <button type="button" data-reading-answer="automation">Human judgment should be removed from studying.</button>
               </div>
               <div class="feedback-box" id="reading-feedback" role="status" hidden></div>
             </div>
