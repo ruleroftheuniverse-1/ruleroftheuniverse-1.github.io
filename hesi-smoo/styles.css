@@ -50,6 +50,118 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+.app-shell,
+.topic-shell {
+  position: relative;
+  z-index: 1;
+}
+
+.fish-ambient {
+  position: fixed;
+  z-index: 0;
+  right: max(3vw, 20px);
+  bottom: max(4vh, 24px);
+  width: 112px;
+  height: 76px;
+  pointer-events: none;
+  opacity: 0.46;
+}
+
+.fishy {
+  position: absolute;
+  right: 12px;
+  bottom: 7px;
+  width: 52px;
+  height: 31px;
+  background: linear-gradient(145deg, #f7d56b, #e89b51);
+  border: 2px solid rgba(80, 56, 182, 0.25);
+  border-radius: 58% 45% 45% 58%;
+  box-shadow: 0 8px 18px rgba(80, 56, 182, 0.13);
+  animation: fish-swim 16s ease-in-out infinite alternate;
+}
+
+.fish-tail {
+  position: absolute;
+  top: 6px;
+  left: -16px;
+  width: 21px;
+  height: 19px;
+  background: #edba5d;
+  border: 2px solid rgba(80, 56, 182, 0.25);
+  border-right: 0;
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+.fish-eye {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 5px;
+  height: 5px;
+  background: var(--ink);
+  border-radius: 50%;
+}
+
+.fish-fin {
+  position: absolute;
+  right: 20px;
+  bottom: -8px;
+  width: 16px;
+  height: 12px;
+  background: #df8d4c;
+  border-radius: 0 0 12px 12px;
+  transform: rotate(-16deg);
+}
+
+.fish-bubble {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border: 1px solid rgba(82, 124, 210, 0.5);
+  border-radius: 50%;
+  animation: bubble-rise 8s ease-in infinite;
+}
+
+.bubble-one { right: 18px; bottom: 46px; }
+.bubble-two { right: 48px; bottom: 30px; animation-delay: -4s; }
+
+.fish-food {
+  position: absolute;
+  right: 28px;
+  top: 2px;
+  width: 7px;
+  height: 7px;
+  background: #70451d;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+body.fish-fed .fish-food {
+  animation: fish-food 1050ms ease-in forwards;
+}
+
+body.fish-fed .fishy {
+  filter: saturate(1.35) brightness(1.08);
+}
+
+@keyframes fish-swim {
+  from { transform: translate(0, 0) rotate(2deg); }
+  to { transform: translate(-22px, -11px) rotate(-3deg); }
+}
+
+@keyframes bubble-rise {
+  0% { opacity: 0; transform: translateY(0) scale(0.65); }
+  18%, 72% { opacity: 0.72; }
+  100% { opacity: 0; transform: translateY(-42px) scale(1.1); }
+}
+
+@keyframes fish-food {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.7); }
+  15% { opacity: 1; }
+  72% { opacity: 1; transform: translate(-20px, 51px) scale(1); }
+  100% { opacity: 0; transform: translate(-23px, 54px) scale(0.4); }
+}
+
 button,
 a {
   -webkit-tap-highlight-color: transparent;
