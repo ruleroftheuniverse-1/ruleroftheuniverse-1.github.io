@@ -1,693 +1,102 @@
 const STORAGE_KEY = "hesi-smoo-v0.1";
 const TARGET_TEST = new Date("2026-09-24T08:30:00");
-
-const capacityPlans = {
-  5: {
-    duration: "5 min",
-    title: "Do a five-minute rescue.",
-    start: "START 5-MIN SESSION",
-    note: "Three useful retrievals. Then you are released.",
-    pill: "DO THIS NOW",
-    subject: "Vocabulary maintenance",
-    labels: ["Vocab sprint", "Math block", "Reading passage"],
-    route: ["3-word rescue · retrieval", "Next session", "Not today"],
-    states: ["NOW", "LATER", "LATER"],
-  },
-  15: {
-    duration: "15 min",
-    title: "Start with vocabulary.",
-    start: "START 15-MIN SESSION",
-    note: "This round is enough. More work is available, not owed.",
-    pill: "DO THIS NOW",
-    subject: "Vocabulary retrieval",
-    labels: ["Vocab sprint", "Math block", "Reading passage"],
-    route: ["15 minutes · retrieval", "If more brain appears", "Not owed"],
-    states: ["NOW", "BONUS", "OPTIONAL"],
-  },
-  30: {
-    duration: "30 min",
-    title: "Vocab, then one math set.",
-    start: "START 30-MIN SESSION",
-    note: "The app has already sequenced the whole half hour.",
-    pill: "DO THIS NOW",
-    subject: "Vocabulary + math",
-    labels: ["Vocab sprint", "Math block", "Reading passage"],
-    route: ["15 minutes · retrieval", "Roman numerals · short set", "If capacity remains"],
-    states: ["NOW", "NEXT", "OPTIONAL"],
-  },
-  full: {
-    duration: "open",
-    title: "Start the full route.",
-    start: "START FULL SESSION",
-    note: "Vocab → math until tired → one reading passage if there’s gas.",
-    pill: "DO THIS NOW",
-    subject: "Full HESI route",
-    labels: ["Vocab sprint", "Math block", "Reading passage"],
-    route: ["15 minutes · retrieval", "Roman numerals · until tired", "Main idea · if capacity remains"],
-    states: ["NOW", "NEXT", "OPTIONAL"],
-  },
+const plans = {
+  5: { duration:"5 min", title:"Do a five-minute rescue.", start:"START 5-MIN SESSION", note:"Three useful retrievals. Then you are released.", pill:"DO THIS NOW", subject:"Vocabulary maintenance", labels:["Vocab rescue","One math item","Reading passage"], route:["3 words · retrieval","Only if more brain appears","Not today"], states:["NOW","BONUS","LATER"] },
+  15:{ duration:"15 min", title:"Start with vocabulary.", start:"START 15-MIN SESSION", note:"This round is enough. More work is available, not owed.", pill:"DO THIS NOW", subject:"Vocabulary retrieval", labels:["Vocab sprint","Math block","Reading passage"], route:["6 words · retrieval","If more brain appears","Not owed"], states:["NOW","BONUS","OPTIONAL"] },
+  30:{ duration:"30 min", title:"Vocab, then one math set.", start:"START 30-MIN SESSION", note:"The app has already sequenced the half hour.", pill:"DO THIS NOW", subject:"Vocabulary + math", labels:["Vocab sprint","Math block","Reading passage"], route:["8 words · retrieval","2 worked items","If capacity remains"], states:["NOW","NEXT","OPTIONAL"] },
+  full:{ duration:"open", title:"Start the full route.", start:"START FULL SESSION", note:"Vocab → math until tired → one reading passage if there’s gas.", pill:"DO THIS NOW", subject:"Full HESI route", labels:["Vocab sprint","Math block","Reading passage"], route:["10 words · retrieval","3 worked items","One passage"], states:["NOW","NEXT","OPTIONAL"] }
 };
-
-const apProtectionPlan = {
-  duration: "5–10 min",
-  title: "Take the HESI minimum dose.",
-  start: "START MINIMUM DOSE",
-  note: "Then close HESI Smoo and go study anatomy. The app means it.",
-  pill: "A&P-PROTECTED",
-  subject: "HESI maintenance",
-  labels: ["HESI maintenance", "One bonus item", "Return to A&P"],
-  route: ["3-word retrieval rescue", "Only if genuinely easy", "A&P gets the next block"],
-  states: ["NOW", "OPTIONAL", "STOP"],
-};
-
-const defaultLogistics = () => ({
-  sections: true,
-  scheduling: false,
-  retake: false,
-  deadline: true,
-});
-
-const localDateKey = (date = new Date()) => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
-
-const defaultDailyContext = () => ({
-  date: localDateKey(),
-  heavyAP: false,
-});
-
-const vocabDeck = [
-  {
-    id: "acute",
-    word: "Acute",
-    example: "“The symptoms had an acute onset.”",
-    answer: "Sudden in onset and often short in duration.",
-  },
-  {
-    id: "abstain",
-    word: "Abstain",
-    example: "“She was told to abstain from food before the procedure.”",
-    answer: "To choose not to do or have something.",
-  },
-  {
-    id: "insidious",
-    word: "Insidious",
-    example: "“The condition can have an insidious progression.”",
-    answer: "Developing gradually or subtly, often with harmful effects.",
-  },
-];
-
-const emptyState = () => ({
-  version: 1,
-  capacity: "15",
-  logistics: defaultLogistics(),
-  dailyContext: defaultDailyContext(),
-  ratings: {},
-  sessions: [],
-  lastOpenedAt: null,
-});
-
-let appState = loadState();
-let currentCardIndex = 0;
-let activeRatings = [];
-let activeBlocks = [];
-let mathCorrect = null;
-let readingCorrect = null;
-let selectedCapacity = appState.capacity || "15";
-let heavyAP = Boolean(appState.dailyContext.heavyAP);
-let deferredInstallPrompt = null;
-let toastTimer = null;
-
-const $ = (selector, root = document) => root.querySelector(selector);
-const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-
-function loadState() {
-  try {
-    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    if (!stored || stored.version !== 1) return emptyState();
-    const priorLogistics = stored.logistics || {};
-    const migratedLogistics = {
-      sections: priorLogistics.sections !== false,
-      scheduling: priorLogistics.scheduling ?? Boolean(priorLogistics.schedule && priorLogistics.times),
-      retake: Boolean(priorLogistics.retake),
-      deadline: priorLogistics.deadline !== false,
-    };
-    const dailyContext = stored.dailyContext?.date === localDateKey()
-      ? { ...defaultDailyContext(), ...stored.dailyContext }
-      : defaultDailyContext();
-    return {
-      ...emptyState(),
-      ...stored,
-      capacity: stored.capacity || "15",
-      logistics: migratedLogistics,
-      dailyContext,
-    };
-  } catch {
-    return emptyState();
-  }
-}
-
-function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
-}
-
-function formatDate(date) {
-  return new Intl.DateTimeFormat(undefined, { weekday: "long", month: "short", day: "numeric" }).format(date);
-}
-
-function setDateLabels() {
-  const now = new Date();
-  const difference = TARGET_TEST - now;
-  const days = Math.max(0, Math.ceil(difference / 86_400_000));
-  const confirmed = Boolean(appState.logistics.scheduling);
-  $("#today-label").textContent = formatDate(now);
-  $("#days-to-target").textContent = difference <= 0
-    ? "planned test time reached"
-    : `${days} ${days === 1 ? "day" : "days"} to ${confirmed ? "test" : "tentative test"}`;
-  $("#test-date-note").textContent = `${confirmed ? "Confirmed test" : "Tentative test"} · Thu, Sep. 24 · 8:30 AM`;
-}
-
-function getActivePlan() {
-  return heavyAP ? apProtectionPlan : capacityPlans[selectedCapacity];
-}
-
-function showView(name) {
-  $$(".view").forEach((view) => {
-    const active = view.dataset.view === name;
-    view.hidden = !active;
-    view.classList.toggle("active", active);
-  });
-
-  $$(".nav-button").forEach((button) => {
-    const active = button.dataset.nav === name;
-    button.classList.toggle("active", active);
-    if (active) button.setAttribute("aria-current", "page");
-    else button.removeAttribute("aria-current");
-  });
-
-  history.replaceState(null, "", `#${name}`);
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function openSession() {
-  currentCardIndex = 0;
-  activeRatings = [];
-  activeBlocks = [];
-  mathCorrect = null;
-  readingCorrect = null;
-  configurePostVocabActions();
-  resetQuestionButtons();
-  renderVocabCard();
-  showSessionPanel("vocab");
-  $("#session-shell").hidden = false;
-  document.body.classList.add("session-open");
-  $("#close-session").focus();
-}
-
-function closeSession() {
-  $("#session-shell").hidden = true;
-  document.body.classList.remove("session-open");
-  $("#start-session").focus();
-}
-
-function showSessionPanel(name) {
-  $$(".session-panel").forEach((panel) => {
-    const active = panel.dataset.sessionPanel === name;
-    panel.hidden = !active;
-    panel.classList.toggle("active", active);
-  });
-
-  const activePlan = getActivePlan();
-  const headers = {
-    vocab: [`VOCAB · ${activePlan.duration.toUpperCase()} PLAN`, "Try it before you reveal it.", `${currentCardIndex + 1} / ${vocabDeck.length}`, ((currentCardIndex + 0.25) / 7) * 100],
-    "vocab-complete": ["VOCAB · COMPLETE", "First block closed.", "1 / 3", 34],
-    math: ["MATH · ROMAN NUMERALS", "Work the item, then check it.", "2 / 3", 48],
-    capacity: ["CHECK CAPACITY", "Choose the truthful stopping point.", "2 / 3", 67],
-    reading: ["READING · MAIN IDEA", "Accuracy first. Timing later.", "3 / 3", 78],
-    complete: ["SESSION · COMPLETE", "The next move can wait.", "DONE", 100],
-  };
-
-  const [kind, title, counter, width] = headers[name];
-  $("#session-kind").textContent = kind;
-  $("#session-title").textContent = title;
-  $("#session-counter").textContent = counter;
-  $("#session-progress-bar").style.width = `${Math.min(100, width)}%`;
-}
-
-function renderVocabCard() {
-  const card = vocabDeck[currentCardIndex];
-  $("#vocab-word").textContent = card.word;
-  $("#vocab-example").textContent = card.example;
-  $("#vocab-answer").textContent = card.answer;
-  $("#answer-area").hidden = true;
-  $("#rating-area").hidden = true;
-  $("#reveal-answer").hidden = false;
-  $("#session-counter").textContent = `${currentCardIndex + 1} / ${vocabDeck.length}`;
-  $("#session-progress-bar").style.width = `${((currentCardIndex + 0.25) / 7) * 100}%`;
-}
-
-function revealAnswer() {
-  $("#reveal-answer").hidden = true;
-  $("#answer-area").hidden = false;
-  $("#rating-area").hidden = false;
-  $("[data-rating='again']").focus();
-}
-
-function rateCard(rating) {
-  const card = vocabDeck[currentCardIndex];
-  activeRatings.push({ itemId: card.id, word: card.word, rating });
-
-  currentCardIndex += 1;
-  if (currentCardIndex < vocabDeck.length) {
-    renderVocabCard();
-    return;
-  }
-
-  activeBlocks.push("Vocabulary");
-  renderVocabCompletion();
-  showSessionPanel("vocab-complete");
-}
-
-function renderVocabCompletion() {
-  const counts = countRatings(activeRatings);
-  const needsReturn = counts.again + counts.hard;
-  $("#vocab-completion-title").textContent = needsReturn
-    ? `Nice—we found ${needsReturn} ${needsReturn === 1 ? "word" : "words"} worth learning.`
-    : "Clean retrieval. These can get out of your way.";
-  $("#vocab-result-copy").textContent = needsReturn
-    ? `${needsReturn} ${needsReturn === 1 ? "word is" : "words are"} now queued to return sooner. The search worked.`
-    : "All three felt retrievable. The full engine would now increase their spacing.";
-  $("#vocab-stats").innerHTML = [
-    statTile(counts.again, "Again"),
-    statTile(counts.hard, "Hard"),
-    statTile(counts.gotIt, "Got it"),
-  ].join("");
-}
-
-function countRatings(ratings) {
-  return ratings.reduce(
-    (counts, item) => {
-      const key = item.rating === "got-it" ? "gotIt" : item.rating;
-      counts[key] += 1;
-      return counts;
-    },
-    { again: 0, hard: 0, gotIt: 0 },
-  );
-}
-
-function statTile(value, label) {
-  return `<div class="stat-tile"><strong>${value}</strong><small>${label}</small></div>`;
-}
-
-function startMath() {
-  showSessionPanel("math");
-}
-
-function configurePostVocabActions() {
-  const shortSession = heavyAP || selectedCapacity === "5" || selectedCapacity === "15";
-  const primaryLabel = $("#continue-math span:first-child");
-  const primaryIcon = $("#continue-math span:last-child");
-  primaryLabel.textContent = heavyAP ? "FINISH HESI · GO TO A&P" : shortSession ? "FINISH TODAY" : "CONTINUE TO MATH";
-  primaryIcon.textContent = shortSession ? "✓" : "→";
-  $("#stop-after-vocab").textContent = heavyAP
-    ? "I truly have more brain → one math item"
-    : shortSession ? "I found more brain → Math" : "Stop here—this still counts";
-}
-
-function handlePostVocabPrimary() {
-  if (heavyAP || selectedCapacity === "5" || selectedCapacity === "15") finishSession("vocab");
-  else startMath();
-}
-
-function handlePostVocabSecondary() {
-  if (heavyAP || selectedCapacity === "5" || selectedCapacity === "15") startMath();
-  else finishSession("vocab");
-}
-
-function answerMath(button) {
-  if (mathCorrect === true) return;
-  const answer = button.dataset.mathAnswer;
-  const correct = answer === "4";
-  mathCorrect = correct;
-
-  $$("#math-choices button").forEach((choice) => {
-    choice.classList.remove("selected-correct", "selected-wrong");
-    if (choice.dataset.mathAnswer === "4") choice.classList.add("selected-correct");
-  });
-  if (!correct) button.classList.add("selected-wrong");
-
-  const feedback = $("#math-feedback");
-  feedback.hidden = false;
-  feedback.textContent = correct
-    ? "Correct. A smaller numeral before a larger one is subtracted: V − I = 4."
-    : "Useful—we found the rule to reinforce. I comes before V, so subtract it: V − I = 4.";
-  $("#math-next").hidden = false;
-}
-
-function finishMathBlock() {
-  activeBlocks.push("Math");
-  if (heavyAP) finishSession("math");
-  else showSessionPanel("capacity");
-}
-
-function startReading() {
-  showSessionPanel("reading");
-}
-
-function answerReading(button) {
-  if (readingCorrect === true) return;
-  const answer = button.dataset.readingAnswer;
-  const correct = answer === "orchestration";
-  readingCorrect = correct;
-
-  $$("#reading-choices button").forEach((choice) => {
-    choice.classList.remove("selected-correct", "selected-wrong");
-    if (choice.dataset.readingAnswer === "orchestration") choice.classList.add("selected-correct");
-  });
-  if (!correct) button.classList.add("selected-wrong");
-
-  const feedback = $("#reading-feedback");
-  feedback.hidden = false;
-  feedback.textContent = correct
-    ? "Correct. Every sentence supports orchestration guided by evidence."
-    : "Useful—we found the distinction to practice. Look for the claim supported by the whole passage: the system should orchestrate work using evidence.";
-  $("#reading-next").hidden = false;
-}
-
-function finishReadingBlock() {
-  activeBlocks.push("Reading");
-  finishSession("reading");
-}
-
-function finishSession(stoppedAfter) {
-  const counts = countRatings(activeRatings);
-  activeRatings.forEach((rating) => {
-    appState.ratings[rating.itemId] = appState.ratings[rating.itemId] || { again: 0, hard: 0, gotIt: 0 };
-    const key = rating.rating === "got-it" ? "gotIt" : rating.rating;
-    appState.ratings[rating.itemId][key] += 1;
-  });
-  const session = {
-    id: crypto.randomUUID ? crypto.randomUUID() : `session-${Date.now()}`,
-    completedAt: new Date().toISOString(),
-    prototype: true,
-    capacity: selectedCapacity,
-    heavyAP,
-    stoppedAfter,
-    blocks: [...activeBlocks],
-    vocab: {
-      cards: activeRatings,
-      counts,
-    },
-    math: activeBlocks.includes("Math") ? { topic: "Roman numerals", correct: mathCorrect } : null,
-    reading: activeBlocks.includes("Reading") ? { skill: "Main idea", correct: readingCorrect } : null,
-  };
-
-  appState.sessions.unshift(session);
-  appState.sessions = appState.sessions.slice(0, 30);
-  saveState();
-  renderFinalSummary(session);
-  renderStoredState();
-  showSessionPanel("complete");
-}
-
-function renderFinalSummary(session) {
-  const blockCount = session.blocks.length;
-  const counts = session.vocab.counts;
-  $("#final-title").textContent = session.heavyAP
-    ? "HESI minimum dose: complete."
-    : blockCount === 1 ? "One useful block: complete." : `${blockCount} useful blocks: complete.`;
-  $("#final-copy").textContent = session.heavyAP
-    ? "Close HESI Smoo. A&P gets the next block; protecting the 4.0 is part of the strategy."
-    : "The evidence is saved on this device and ready for Nichole mode.";
-  $("#final-summary").innerHTML = [
-    statTile(blockCount, blockCount === 1 ? "Block" : "Blocks"),
-    statTile(counts.again + counts.hard, "Words to return"),
-    statTile(session.reading ? "Yes" : "No", "Reading"),
-  ].join("");
-}
-
-function renderStoredState() {
-  const latest = appState.sessions[0];
-  const empty = $("#recent-session-empty");
-  const list = $("#recent-session-list");
-
-  if (!latest) {
-    empty.hidden = false;
-    list.hidden = true;
-    $("#share-title").textContent = "Nothing to send yet.";
-    $("#share-summary").textContent = "Complete the demo round and this becomes a clean, copyable study report.";
-    $("#vocab-readiness").textContent = "No estimate yet";
-    return;
-  }
-
-  empty.hidden = true;
-  list.hidden = false;
-  list.innerHTML = appState.sessions.slice(0, 4).map((session) => {
-    const when = new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }).format(new Date(session.completedAt));
-    const returnCount = session.vocab.counts.again + session.vocab.counts.hard;
-    return `<li><div><strong>${session.blocks.join(" + ")}</strong><small>${when} · ${returnCount} vocab ${returnCount === 1 ? "item" : "items"} to revisit</small></div><span class="session-score">${session.blocks.length} ${session.blocks.length === 1 ? "block" : "blocks"}</span></li>`;
-  }).join("");
-
-  const counts = latest.vocab.counts;
-  $("#share-title").textContent = `${latest.blocks.length} ${latest.blocks.length === 1 ? "block" : "blocks"} completed.`;
-  $("#share-summary").textContent = summaryText(latest);
-  $("#vocab-readiness").textContent = `${counts.gotIt} / ${vocabDeck.length} retrieved once`;
-}
-
-function summaryText(session) {
-  const ratings = session.vocab.counts;
-  const math = session.math ? ` Math: Roman numeral demo ${session.math.correct ? "correct" : "needed correction"}.` : "";
-  const reading = session.reading ? ` Reading: main-idea demo ${session.reading.correct ? "correct" : "needed correction"}.` : "";
-  const capacity = capacityPlans[session.capacity || "15"].duration;
-  const protection = session.heavyAP ? " A&P-protected minimum-dose day." : "";
-  return `HESI Smoo demo — ${capacity} plan; ${session.blocks.join(", ")}. Vocab: ${ratings.gotIt} got it, ${ratings.hard} hard, ${ratings.again} again.${math}${reading}${protection}`;
-}
-
-function selectCapacity(capacity) {
-  selectedCapacity = capacity;
-  appState.capacity = capacity;
-  saveState();
-  renderCapacityPlan();
-}
-
-function renderCapacityPlan() {
-  const plan = getActivePlan();
-  $$("[data-capacity]").forEach((button) => {
-    const selected = button.dataset.capacity === selectedCapacity;
-    button.classList.toggle("selected", selected);
-    button.setAttribute("aria-checked", String(selected));
-  });
-  $("#now-pill").textContent = plan.pill;
-  $("#next-subject-label").textContent = plan.subject;
-  $("#session-duration").textContent = plan.duration;
-  $("#next-title").textContent = plan.title;
-  $("#start-label").textContent = plan.start;
-  $("#after-note").textContent = plan.note;
-  $$(".route-item").forEach((item, index) => {
-    item.classList.remove("complete", "current");
-    if (index === 0) item.classList.add("current");
-    item.querySelector(".route-number").textContent = String(index + 1);
-    item.querySelector(".route-copy strong").textContent = plan.labels[index];
-    item.querySelector(".route-copy small").textContent = plan.route[index];
-    item.querySelector(".route-state").textContent = plan.states[index];
-  });
-  markRouteCompletion();
-}
-
-function toggleHeavyAP() {
-  heavyAP = !heavyAP;
-  appState.dailyContext = { date: localDateKey(), heavyAP };
-  saveState();
-  renderCapacityPlan();
-  renderHeavyAPState();
-}
-
-function renderHeavyAPState() {
-  const button = $("#ap-load-toggle");
-  button.classList.toggle("active", heavyAP);
-  button.setAttribute("aria-pressed", String(heavyAP));
-  button.querySelector(".ap-toggle-box").textContent = heavyAP ? "✓" : "";
-  $("#ap-toggle-state").textContent = heavyAP ? "Yes" : "No";
-}
-
-function toggleLogistics(key) {
-  appState.logistics[key] = !appState.logistics[key];
-  saveState();
-  renderLogistics();
-  setDateLabels();
-}
-
-function renderLogistics() {
-  const completed = Object.values(appState.logistics).filter(Boolean).length;
-  const pending = appState.logistics.scheduling ? 0 : 1;
-  $("#logistics-count").textContent = `${completed} / 4 known${pending ? " · 1 pending" : ""}`;
-  $$("[data-logistics]").forEach((button) => {
-    const key = button.dataset.logistics;
-    const done = Boolean(appState.logistics[key]);
-    const isPending = key === "scheduling" && !done;
-    button.classList.toggle("complete", done);
-    button.classList.toggle("pending", isPending);
-    button.setAttribute("aria-pressed", String(done));
-    button.querySelector(".check-box").textContent = done ? "✓" : isPending ? "…" : "";
-  });
-}
-
-async function copySummary() {
-  const latest = appState.sessions[0];
-  const text = latest ? summaryText(latest) : "HESI Smoo: no completed session yet.";
-  try {
-    await navigator.clipboard.writeText(text);
-    showToast("Summary copied.");
-  } catch {
-    showToast("Copy was blocked. Try Download data instead.");
-  }
-}
-
-function downloadResults() {
-  const payload = {
-    app: "HESI Smoo",
-    version: "0.2-prototype",
-    exportedAt: new Date().toISOString(),
-    data: appState,
-  };
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `hesi-smoo-results-${new Date().toISOString().slice(0, 10)}.json`;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
-  showToast("Results downloaded.");
-}
-
-function resetPrototype() {
-  const confirmed = window.confirm("Reset all HESI Smoo prototype data on this device?");
-  if (!confirmed) return;
-  appState = emptyState();
-  selectedCapacity = appState.capacity;
-  heavyAP = false;
-  saveState();
-  renderCapacityPlan();
-  renderHeavyAPState();
-  renderLogistics();
-  renderStoredState();
-  setDateLabels();
-  showToast("Prototype data reset.");
-}
-
-function resetQuestionButtons() {
-  $$("#math-choices button, #reading-choices button").forEach((button) => {
-    button.classList.remove("selected-correct", "selected-wrong");
-  });
-  $("#math-feedback").hidden = true;
-  $("#math-next").hidden = true;
-  $("#reading-feedback").hidden = true;
-  $("#reading-next").hidden = true;
-}
-
-function markRouteCompletion() {
-  const latest = appState.sessions[0];
-  if (!latest || new Date(latest.completedAt).toDateString() !== new Date().toDateString()) return;
-  $$(".route-item").forEach((item) => {
-    const map = { vocab: "Vocabulary", math: "Math", reading: "Reading" };
-    if (latest.blocks.includes(map[item.dataset.routeStep])) {
-      item.classList.add("complete");
-      item.classList.remove("current");
-      item.querySelector(".route-number").textContent = "✓";
-      item.querySelector(".route-state").textContent = "DONE";
-    }
-  });
-}
-
-function showToast(message) {
-  const toast = $("#toast");
-  toast.textContent = message;
-  toast.hidden = false;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => {
-    toast.hidden = true;
-  }, 2400);
-}
-
-function bindEvents() {
-  $$(".nav-button").forEach((button) => button.addEventListener("click", () => showView(button.dataset.nav)));
-  $(".brand").addEventListener("click", (event) => {
-    event.preventDefault();
-    showView("today");
-  });
-  $("#start-session").addEventListener("click", openSession);
-  $$("[data-capacity]").forEach((button) => button.addEventListener("click", () => selectCapacity(button.dataset.capacity)));
-  $("#ap-load-toggle").addEventListener("click", toggleHeavyAP);
-  $$("[data-logistics]").forEach((button) => button.addEventListener("click", () => toggleLogistics(button.dataset.logistics)));
-  $("#close-session").addEventListener("click", closeSession);
-  $("#reveal-answer").addEventListener("click", revealAnswer);
-  $$("[data-rating]").forEach((button) => button.addEventListener("click", () => rateCard(button.dataset.rating)));
-  $("#continue-math").addEventListener("click", handlePostVocabPrimary);
-  $("#stop-after-vocab").addEventListener("click", handlePostVocabSecondary);
-  $$("#math-choices button").forEach((button) => button.addEventListener("click", () => answerMath(button)));
-  $("#math-next").addEventListener("click", finishMathBlock);
-  $("#continue-reading").addEventListener("click", startReading);
-  $("#finish-after-math").addEventListener("click", () => finishSession("math"));
-  $$("#reading-choices button").forEach((button) => button.addEventListener("click", () => answerReading(button)));
-  $("#reading-next").addEventListener("click", finishReadingBlock);
-  $("#return-today").addEventListener("click", () => {
-    closeSession();
-    markRouteCompletion();
-    showView("today");
-  });
-  $("#copy-summary").addEventListener("click", copySummary);
-  $("#download-results").addEventListener("click", downloadResults);
-  $("#reset-prototype").addEventListener("click", resetPrototype);
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !$("#session-shell").hidden) closeSession();
-  });
-}
-
-function setupInstallPrompt() {
-  window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    deferredInstallPrompt = event;
-    $("#install-button").hidden = false;
-  });
-
-  $("#install-button").addEventListener("click", async () => {
-    if (!deferredInstallPrompt) return;
-    deferredInstallPrompt.prompt();
-    await deferredInstallPrompt.userChoice;
-    deferredInstallPrompt = null;
-    $("#install-button").hidden = true;
-  });
-}
-
-function registerServiceWorker() {
-  if (!("serviceWorker" in navigator)) return;
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none" }).catch(() => {
-      // Offline installation is an enhancement; the study UI remains usable without it.
-    });
-  });
-}
-
-function init() {
-  appState.lastOpenedAt = new Date().toISOString();
-  saveState();
-  setDateLabels();
-  bindEvents();
-  setupInstallPrompt();
-  renderCapacityPlan();
-  renderHeavyAPState();
-  renderLogistics();
-  renderStoredState();
-  markRouteCompletion();
-  const initialView = ["today", "progress", "coach"].includes(location.hash.slice(1)) ? location.hash.slice(1) : "today";
-  showView(initialView);
-  registerServiceWorker();
-}
-
+const apPlan = { duration:"5–10 min", title:"Take the HESI minimum dose.", start:"START MINIMUM DOSE", note:"Then close HESI Smoo and go study anatomy. The app means it.", pill:"A&P-PROTECTED", subject:"HESI maintenance", labels:["HESI maintenance","One bonus item","Return to A&P"], route:["3-word retrieval rescue","Only if genuinely easy","A&P gets the next block"], states:["NOW","OPTIONAL","STOP"] };
+
+// Original app-authored material. The uploaded guides informed the topic map, not these items.
+const vocab = [
+["acute","Acute","The symptoms had an acute onset.","Sudden in onset and often short in duration."],
+["abstain","Abstain","She was told to abstain from food before the procedure.","To choose not to do or have something."],
+["insidious","Insidious","The condition can have an insidious progression.","Developing gradually or subtly, often with harmful effects."],
+["adverse","Adverse","The chart notes an adverse reaction to the medication.","Harmful or unfavorable."],
+["alleviate","Alleviate","The intervention may alleviate discomfort.","To make pain or a problem less severe."],
+["benign","Benign","The biopsy showed a benign growth.","Not harmful; not cancerous in a medical context."],
+["coherent","Coherent","The patient remained coherent during the assessment.","Clear, logical, and able to be understood."],
+["exacerbate","Exacerbate","Skipping the dose could exacerbate the symptoms.","To make a problem worse."],
+["lethargic","Lethargic","After the procedure, he appeared lethargic.","Very tired, sluggish, or lacking energy."],
+["mitigate","Mitigate","Frequent breaks can mitigate the risk of fatigue.","To make something less severe or harmful."],
+["negligible","Negligible","The change in temperature was negligible.","So small that it is not important in context."],
+["obsolete","Obsolete","That filing system is now obsolete.","No longer used because something newer has replaced it."],
+["prevalent","Prevalent","Seasonal allergies are prevalent in the spring.","Common or widespread."],
+["prognosis","Prognosis","The clinician discussed the prognosis with the family.","A prediction about the likely course or outcome of a condition."],
+["reluctant","Reluctant","She was reluctant to begin an unfamiliar task.","Unwilling or hesitant."],
+["transient","Transient","The dizziness was transient and resolved quickly.","Temporary; lasting only a short time."],
+["meticulous","Meticulous","The technician kept meticulous records.","Very careful and precise about details."],
+["plausible","Plausible","The explanation sounded plausible, but it needed evidence.","Seeming reasonable or believable."]
+].map(([id,word,example,answer])=>({id,word,example,answer}));
+const math = [
+["fraction-mixed-decimal","Fraction conversion","What is 2 3/8 written as a decimal?",["2.38","2.375","2.625","2.83"],"2.375","3 ÷ 8 = 0.375, so 2 3/8 = 2.375."],
+["fraction-decimal","Fraction conversion","Which fraction is equal to 0.45?",["9/20","4/5","45/10","1/4"],"9/20","0.45 = 45/100. Divide numerator and denominator by 5 to get 9/20."],
+["fraction-add","Fraction arithmetic","A patient drinks 3/4 cup of water in the morning and 2/3 cup in the afternoon. How much is that altogether?",["1 1/12 cups","1 5/12 cups","1 1/2 cups","5/7 cup"],"1 5/12 cups","Use twelfths: 3/4 = 9/12 and 2/3 = 8/12. Together: 17/12 = 1 5/12."],
+["fraction-multiply","Fraction arithmetic","What is 3/5 of 40?",["15","24","32","75"],"24","3/5 × 40 = 3 × 8 = 24."],
+["decimal-multiply","Decimal operations","What is 3.6 × 0.4?",["0.144","1.44","14.4","1.04"],"1.44","36 × 4 = 144. There are two decimal places total, so the answer is 1.44."],
+["decimal-divide","Decimal operations","What is 7.2 ÷ 0.6?",["1.2","12","120","0.12"],"12","Move both decimals one place: 72 ÷ 6 = 12."],
+["percent-of","Percent","A dose is reduced by 25% from 80 mg. How many milligrams are reduced?",["20 mg","25 mg","55 mg","60 mg"],"20 mg","25% = 0.25. One quarter of 80 is 20."],
+["percent-whole","Percent","Thirty is 15% of what number?",["45","150","200","450"],"200","Part = percent × whole. 30 = 0.15 × whole, so whole = 30 ÷ 0.15 = 200."],
+["percent-increase","Percent","A price rises from $40 to $50. What is the percent increase?",["10%","20%","25%","125%"],"25%","The increase is $10. Compare to the original: 10 ÷ 40 = 0.25 = 25%."],
+["ratio-proportion","Ratios and proportions","A mixture uses 2 cups of concentrate for every 5 cups of water. How many cups of concentrate are needed for 20 cups of water?",["4","6","8","10"],"8","20 is four groups of 5, so the concentrate is four groups of 2: 8 cups."],
+["unit-conversion","Conversions","A bottle contains 1.5 liters. How many milliliters is that?",["150 mL","500 mL","1,050 mL","1,500 mL"],"1,500 mL","1 liter = 1,000 mL. Multiply 1.5 by 1,000."],
+["rate","Rates","An IV bag delivers 480 mL over 4 hours. What is the average rate in mL per hour?",["96","120","160","1,920"],"120","Rate = amount ÷ time: 480 ÷ 4 = 120 mL/hour."],
+["equation","Equations","Solve: 4x + 7 = 31",["4","6","8","9.5"],"6","Subtract 7: 4x = 24. Divide by 4: x = 6."],
+["pemdas","Order of operations","What is 18 ÷ 3 + 2 × 4?",["8","14","32","48"],"14","Do multiplication and division first: 18 ÷ 3 = 6 and 2 × 4 = 8. Then add: 14."],
+["military-time","Military time","What time is 18:45 in standard time?",["6:45 AM","8:45 AM","6:45 PM","8:45 PM"],"6:45 PM","For hours over 12, subtract 12: 18 − 12 = 6. The time is PM."],
+["roman","Roman numerals","What number does IV represent?",["4","6","9","11"],"4","A smaller numeral before a larger one is subtracted: V − I = 4."]
+].map(([id,topic,prompt,choices,answer,explanation])=>({id,topic,prompt,choices,answer,explanation}));
+const reading = [
+["reading-main-idea","Main idea","At a community clinic, missed appointments had been rising for months. Staff first assumed patients simply forgot. A review showed that many reminders were sent only in English, while a large group of patients preferred Spanish. After the clinic began sending reminders in both languages, missed appointments declined. The staff then kept reviewing the data rather than assuming the first explanation would always be correct.","What is the passage mainly about?",["Patients prefer bilingual staff to medical care.","Data review helped the clinic identify and address a cause of missed appointments.","English reminders are never useful.","Most missed appointments are caused by forgetfulness."],1,"The passage traces a problem, an initial assumption, evidence that challenged it, and a change that improved outcomes."],
+["reading-purpose","Author’s purpose","The library extended its weekend hours during exam season. It did not expect the change to solve every student’s problem. Instead, librarians wanted to test whether a quieter study space at a different time would help students who worked during the day. Attendance records and a short survey would determine whether the new hours were continued.","Why did the library extend its weekend hours?",["To promise that every student would study more.","To test whether a different access schedule would help a particular group of students.","To replace all daytime library hours.","To collect attendance data for its own sake."],1,"The stated aim is a test of whether the changed schedule helps students who work during the day."],
+["reading-inference","Inference","A town installed several water refill stations in its parks. In the first month, the stations were used most often near playgrounds and athletic fields, especially on hot afternoons. The town plans to add shade near those locations before next summer.","What can reasonably be inferred from the passage?",["All park visitors carry reusable bottles.","The town believes heat and activity may increase demand for water at the busiest stations.","The refill stations were too expensive to operate.","Shade will eliminate the need for water stations."],1,"High use near active areas on hot afternoons gives the town a reason to add shade there; the other claims go beyond the evidence."],
+["reading-detail","Supporting detail","A hospital unit changed its shift handoff form. The old form listed tasks but did not require nurses to record which tasks had been completed. The new form added a completion field and a space for unresolved concerns. After six weeks, nurses reported fewer duplicate calls at the beginning of each shift.","Which detail best supports the idea that the new form improved handoffs?",["The unit changed its form.","The old form listed tasks.","The new form had a completion field.","Nurses reported fewer duplicate calls after the change."],3,"The reduction in duplicate calls is the outcome evidence that the handoff process improved."],
+["reading-tone","Tone","The proposal is ambitious, and its supporters have identified a real problem. Still, the budget estimate assumes volunteer labor will remain available for three years, an assumption the proposal does not defend. Before approval, the committee should request a revised budget that shows what happens if volunteer hours decline.","The author’s tone is best described as",["mocking and dismissive","uncritically enthusiastic","cautiously supportive but skeptical","confused and indifferent"],2,"The author acknowledges a real problem and ambition while identifying a specific unsupported assumption and asking for revision."]
+].map(([id,type,passage,prompt,choices,answer,explanation])=>({id,type,passage,prompt,choices,answer,explanation}));
+
+const $=(q,r=document)=>r.querySelector(q), $$=(q,r=document)=>[...r.querySelectorAll(q)];
+const dateKey=()=>new Date().toISOString().slice(0,10);
+const empty=()=>({version:2,capacity:"15",logistics:{sections:true,scheduling:false,retake:false,deadline:true},dailyContext:{date:dateKey(),heavyAP:false},ratings:{},itemHistory:{},sessions:[]});
+function load(){try{const s=JSON.parse(localStorage.getItem(STORAGE_KEY));if(!s)return empty();const d=s.dailyContext?.date===dateKey()?s.dailyContext:{date:dateKey(),heavyAP:false};return {...empty(),...s,version:2,ratings:s.ratings||{},itemHistory:s.itemHistory||{},dailyContext:d,logistics:{...empty().logistics,...s.logistics}}}catch{return empty()}}
+let state=load(), cap=state.capacity, heavy=!!state.dailyContext.heavyAP, vRound=[],vIndex=0,vRatings=[],mRound=[],mIndex=0,mAnswers=[],rItem=null,rAnswer=null,blocks=[],toastTimer,installPrompt;
+const save=()=>localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+const activePlan=()=>heavy?apPlan:plans[cap];
+const vCount=()=>heavy||cap==="5"?3:cap==="15"?6:cap==="30"?8:10;
+const mCount=()=>cap==="full"?3:cap==="30"?2:1;
+const hist=id=>state.itemHistory[id]||{attempts:0,correct:0,wrong:0};
+const pick=(items,n,score)=>[...items].sort((a,b)=>score(b)-score(a)||a.id.localeCompare(b.id)).slice(0,n);
+const vScore=i=>{const r=state.ratings[i.id]||{again:0,hard:0,gotIt:0};return r.again*4+r.hard*2-r.gotIt*.35};
+const qScore=i=>{const h=hist(i.id);return h.wrong*4-h.correct*.45+(h.attempts?0:1)};
+const stat=(n,label)=>`<div class="stat-tile"><strong>${n}</strong><small>${label}</small></div>`;
+function setDates(){const diff=TARGET_TEST-new Date(),days=Math.max(0,Math.ceil(diff/86400000)),confirmed=state.logistics.scheduling;$("#today-label").textContent=new Intl.DateTimeFormat(undefined,{weekday:"long",month:"short",day:"numeric"}).format(new Date());$("#days-to-target").textContent=diff<=0?"planned test time reached":`${days} ${days===1?"day":"days"} to ${confirmed?"test":"tentative test"}`;$("#test-date-note").textContent=`${confirmed?"Confirmed":"Tentative"} test · Thu, Sep. 24 · 8:30 AM`;}
+function view(name){$$(".view").forEach(x=>{x.hidden=x.dataset.view!==name;x.classList.toggle("active",!x.hidden)});$$(".nav-button").forEach(x=>{const on=x.dataset.nav===name;x.classList.toggle("active",on);on?x.setAttribute("aria-current","page"):x.removeAttribute("aria-current")});history.replaceState(null,"",`#${name}`);window.scrollTo({top:0,behavior:"smooth"})}
+function panel(name){$$(".session-panel").forEach(x=>{x.hidden=x.dataset.sessionPanel!==name;x.classList.toggle("active",!x.hidden)});const h={vocab:[`VOCAB · ${activePlan().duration.toUpperCase()} PLAN`,"Try it before you reveal it.",`${vIndex+1} / ${vRound.length}`,8],doneV:["VOCAB · COMPLETE","First block closed.","1 / 3",34],math:["MATH · WORKED PRACTICE","Choose, then read the mechanism.",`${mIndex+1} / ${mRound.length}`,48],capacity:["CHECK CAPACITY","Choose the truthful stopping point.","2 / 3",67],reading:["READING · ONE PASSAGE","Accuracy first. Timing later.","3 / 3",78],complete:["SESSION · COMPLETE","The next move can wait.","DONE",100]}[name];$("#session-kind").textContent=h[0];$("#session-title").textContent=h[1];$("#session-counter").textContent=h[2];$("#session-progress-bar").style.width=`${h[3]}%`;}
+function renderPlan(){const p=activePlan();$$("[data-capacity]").forEach(b=>{const s=b.dataset.capacity===cap;b.classList.toggle("selected",s);b.setAttribute("aria-checked",s)});$("#now-pill").textContent=p.pill;$("#next-subject-label").textContent=p.subject;$("#session-duration").textContent=p.duration;$("#next-title").textContent=p.title;$("#start-label").textContent=p.start;$("#after-note").textContent=p.note;$$(".route-item").forEach((x,i)=>{x.classList.remove("complete","current");if(!i)x.classList.add("current");x.querySelector(".route-number").textContent=i+1;x.querySelector(".route-copy strong").textContent=p.labels[i];x.querySelector(".route-copy small").textContent=p.route[i];x.querySelector(".route-state").textContent=p.states[i]});markRoute()}
+function renderHeavy(){const b=$("#ap-load-toggle");b.classList.toggle("active",heavy);b.setAttribute("aria-pressed",heavy);b.querySelector(".ap-toggle-box").textContent=heavy?"✓":"";$("#ap-toggle-state").textContent=heavy?"Yes":"No";}
+function renderLogistics(){const n=Object.values(state.logistics).filter(Boolean).length,p=state.logistics.scheduling?0:1;$("#logistics-count").textContent=`${n} / 4 known${p?" · 1 pending":""}`;$$("[data-logistics]").forEach(b=>{const k=b.dataset.logistics,d=!!state.logistics[k],pending=k==="scheduling"&&!d;b.classList.toggle("complete",d);b.classList.toggle("pending",pending);b.setAttribute("aria-pressed",d);b.querySelector(".check-box").textContent=d?"✓":pending?"…":""})}
+function renderQueue(){const records=[...math,...reading].map(i=>({label:i.topic||i.type,...hist(i.id)})).filter(i=>i.attempts).sort((a,b)=>(b.wrong*3-b.correct)-(a.wrong*3-a.correct));$("#queue-count").textContent=records.length?`${records.length} measured`:"Starting map";const initial=["Fraction conversion","Decimal operations","Percent","Main idea vs. detail"];$("#weak-queue").innerHTML=(records.length?records.slice(0,4).map((i,n)=>[i.label,`${i.wrong} miss${i.wrong===1?"":"es"} · returns sooner`]):initial.map((label,n)=>[label,n<2?"Known starting focus":"Will enter after evidence"])).map(([label,sub],n)=>`<li${n>1&&!records.length?' class="muted-row"':""}><span class="queue-rank">${String(n+1).padStart(2,"0")}</span><div><strong>${label}</strong><small>${sub}</small></div><span class="queue-action">${records.length?"PRACTICE":"NEXT"}</span></li>`).join("");}
+function summary(s){const c=s.vocab.counts,m=s.math?` Math: ${s.math.items.filter(i=>i.correct).length}/${s.math.items.length} correct.`:"",r=s.reading?` Reading: ${s.reading.type} ${s.reading.correct?"correct":"needed correction"}.`:"";return `HESI Smoo — ${plans[s.capacity||"15"].duration} plan; ${s.blocks.join(", ")}. Vocab: ${c.gotIt} got it, ${c.hard} hard, ${c.again} again.${m}${r}${s.heavyAP?" A&P-protected minimum-dose day.":""}`;}
+function renderStored(){const latest=state.sessions[0],v=Object.values(state.ratings).reduce((a,r)=>({again:a.again+r.again,hard:a.hard+r.hard,gotIt:a.gotIt+r.gotIt}),{again:0,hard:0,gotIt:0});$("#vocab-readiness").textContent=v.again+v.hard+v.gotIt?`${v.gotIt} successful retrievals`:"No estimate yet";for(const [id,items] of [["math-readiness",math],["reading-readiness",reading]]){const x=items.reduce((a,i)=>({a:a.a+hist(i.id).attempts,c:a.c+hist(i.id).correct}),{a:0,c:0});$("#"+id).textContent=x.a?`${x.c} / ${x.a} correct in practice`:"No estimate yet"}if(!latest){$("#recent-session-empty").hidden=false;$("#recent-session-list").hidden=true;$("#share-title").textContent="Nothing to send yet.";$("#share-summary").textContent="Complete a session and this becomes a clean, copyable study report.";return}$("#recent-session-empty").hidden=true;$("#recent-session-list").hidden=false;$("#recent-session-list").innerHTML=state.sessions.slice(0,4).map(s=>{const when=new Intl.DateTimeFormat(undefined,{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}).format(new Date(s.completedAt)),returns=s.vocab.counts.again+s.vocab.counts.hard;return `<li><div><strong>${s.blocks.join(" + ")}</strong><small>${when} · ${returns} vocab ${returns===1?"item":"items"} to revisit</small></div><span class="session-score">${s.blocks.length} ${s.blocks.length===1?"block":"blocks"}</span></li>`}).join("");$("#share-title").textContent=`${latest.blocks.length} ${latest.blocks.length===1?"block":"blocks"} completed.`;$("#share-summary").textContent=summary(latest);}
+function markRoute(){const s=state.sessions[0];if(!s||new Date(s.completedAt).toDateString()!==new Date().toDateString())return;$$(".route-item").forEach(x=>{const map={vocab:"Vocabulary",math:"Math",reading:"Reading"};if(s.blocks.includes(map[x.dataset.routeStep])){x.classList.add("complete");x.classList.remove("current");x.querySelector(".route-number").textContent="✓";x.querySelector(".route-state").textContent="DONE"}})}
+function resetSession(){vIndex=0;vRatings=[];mRound=[];mIndex=0;mAnswers=[];rItem=null;rAnswer=null;blocks=[];}
+function showSessionShell(){$("#session-shell").hidden=false;document.body.classList.add("session-open");$("#close-session").focus();}
+function openSession(){resetSession();vRound=pick(vocab,vCount(),vScore);renderV();panel("vocab");showSessionShell();}
+function openTopic(value){resetSession();const [lane,topic]=value.split(":");if(lane==="vocab"){vRound=pick(vocab,vCount(),vScore);renderV();panel("vocab");}else if(lane==="math"){startMath(topic);}else{startReading(topic);}showSessionShell();}
+function closeSession(){$("#session-shell").hidden=true;document.body.classList.remove("session-open");$("#start-session").focus();}
+function renderV(){const x=vRound[vIndex];$("#vocab-word").textContent=x.word;$("#vocab-example").textContent=`“${x.example}”`;$("#vocab-answer").textContent=x.answer;$("#answer-area").hidden=true;$("#rating-area").hidden=true;$("#reveal-answer").hidden=false;$("#session-counter").textContent=`${vIndex+1} / ${vRound.length}`;$("#session-progress-bar").style.width=`${8+vIndex/vRound.length*24}%`;}
+function rate(rating){const x=vRound[vIndex];vRatings.push({itemId:x.id,word:x.word,rating});if(++vIndex<vRound.length){renderV();return}blocks.push("Vocabulary");const c=countRatings();const n=c.again+c.hard;$("#vocab-completion-title").textContent=n?`Nice—we found ${n} ${n===1?"word":"words"} worth learning.`:"Clean retrieval. These can get out of your way.";$("#vocab-result-copy").textContent=n?`${n} ${n===1?"word is":"words are"} now queued to return sooner. The search worked.`:"These words can now return less often, not disappear forever.";$("#vocab-stats").innerHTML=[stat(c.again,"Again"),stat(c.hard,"Hard"),stat(c.gotIt,"Got it")].join("");const short=heavy||cap==="5"||cap==="15";$("#continue-math span:first-child").textContent=heavy?"FINISH HESI · GO TO A&P":short?"FINISH TODAY":"CONTINUE TO MATH";$("#continue-math span:last-child").textContent=short?"✓":"→";$("#stop-after-vocab").textContent=heavy?"I truly have more brain → one math item":short?"I found more brain → Math":"Stop here—this still counts";panel("doneV");}
+function countRatings(){return vRatings.reduce((a,r)=>{a[r.rating==="got-it"?"gotIt":r.rating]++;return a},{again:0,hard:0,gotIt:0})}
+function startMath(topic){const pool=topic?math.filter(x=>x.topic===topic):math;mRound=pick(pool.length?pool:math,mCount(),qScore);mIndex=0;mAnswers=[];renderMath();panel("math");}
+function choices(el,values,fn){el.innerHTML="";values.forEach((v,i)=>{const b=document.createElement("button");b.type="button";b.textContent=v;b.addEventListener("click",()=>fn(i,b));el.append(b)})}
+function renderMath(){const x=mRound[mIndex];$("#math-instruction").textContent=`${x.topic.toUpperCase()} · ORIGINAL PRACTICE`;$("#math-prompt").textContent=x.prompt;$("#math-feedback").hidden=true;$("#math-next").hidden=true;$("#math-next span:first-child").textContent=mIndex+1===mRound.length?"MATH BLOCK DONE":"NEXT MATH ITEM";choices($("#math-choices"),x.choices,answerMath);$("#session-counter").textContent=`${mIndex+1} / ${mRound.length}`;}
+function record(x,correct){const h=state.itemHistory[x.id]||{attempts:0,correct:0,wrong:0,topic:x.topic||x.type};h.attempts++;h[correct?"correct":"wrong"]++;h.topic=x.topic||x.type;state.itemHistory[x.id]=h;save();}
+function answerMath(i,b){if(mAnswers[mIndex])return;const x=mRound[mIndex],correct=x.choices[i]===x.answer;mAnswers[mIndex]={id:x.id,topic:x.topic,correct};record(x,correct);$$("#math-choices button").forEach(q=>{q.disabled=true;if(q.textContent===x.answer)q.classList.add("selected-correct")});if(!correct)b.classList.add("selected-wrong");$("#math-feedback").hidden=false;$("#math-feedback").textContent=(correct?"Correct. ":"Useful—we found the procedure to reinforce. ")+x.explanation;$("#math-next").hidden=false;}
+function nextMath(){if(++mIndex<mRound.length){renderMath();return}blocks.push("Math");heavy?finish("math"):panel("capacity");}
+function startReading(type){const pool=type?reading.filter(x=>x.type===type):reading;rItem=pick(pool.length?pool:reading,1,qScore)[0];rAnswer=null;$("#reading-instruction").textContent=`${rItem.type.toUpperCase()} · ORIGINAL PASSAGE`;$("#reading-passage").textContent=rItem.passage;$("#reading-prompt").textContent=rItem.prompt;$("#reading-feedback").hidden=true;$("#reading-next").hidden=true;choices($("#reading-choices"),rItem.choices,answerReading);panel("reading");}
+function answerReading(i,b){if(rAnswer)return;const correct=i===rItem.answer;rAnswer={id:rItem.id,type:rItem.type,correct};record(rItem,correct);$$("#reading-choices button").forEach((q,n)=>{q.disabled=true;if(n===rItem.answer)q.classList.add("selected-correct")});if(!correct)b.classList.add("selected-wrong");$("#reading-feedback").hidden=false;$("#reading-feedback").textContent=(correct?"Correct. ":"Useful—we found the distinction to practice. ")+rItem.explanation;$("#reading-next").hidden=false;}
+function finish(stop){const c=countRatings();vRatings.forEach(r=>{const x=state.ratings[r.itemId]||{again:0,hard:0,gotIt:0};x[r.rating==="got-it"?"gotIt":r.rating]++;state.ratings[r.itemId]=x});const s={id:crypto.randomUUID?.()||`s-${Date.now()}`,completedAt:new Date().toISOString(),capacity:cap,heavyAP:heavy,stoppedAfter:stop,blocks:[...blocks],vocab:{cards:vRatings,counts:c},math:mAnswers.length?{items:mAnswers}:null,reading:rAnswer};state.sessions.unshift(s);state.sessions=state.sessions.slice(0,50);save();$("#final-title").textContent=heavy?"HESI minimum dose: complete.":blocks.length===1?"One useful block: complete.":`${blocks.length} useful blocks: complete.`;$("#final-copy").textContent=heavy?"Close HESI Smoo. A&P gets the next block; protecting the 4.0 is part of the strategy.":"The evidence is saved on this device and ready for Nichole mode.";$("#final-summary").innerHTML=[stat(blocks.length,blocks.length===1?"Block":"Blocks"),stat(c.again+c.hard,"Words to return"),stat(rAnswer?"Yes":"No","Reading")].join("");renderStored();renderQueue();panel("complete");}
+function toast(t){const x=$("#toast");x.textContent=t;x.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>x.hidden=true,2400)}
+function bind(){$$(".nav-button").forEach(b=>b.addEventListener("click",()=>view(b.dataset.nav)));$(".brand").addEventListener("click",e=>{e.preventDefault();view("today")});$("#start-session").addEventListener("click",openSession);$$("[data-capacity]").forEach(b=>b.addEventListener("click",()=>{cap=b.dataset.capacity;state.capacity=cap;save();renderPlan()}));$("#ap-load-toggle").addEventListener("click",()=>{heavy=!heavy;state.dailyContext={date:dateKey(),heavyAP:heavy};save();renderPlan();renderHeavy()});$$("[data-logistics]").forEach(b=>b.addEventListener("click",()=>{const k=b.dataset.logistics;state.logistics[k]=!state.logistics[k];save();renderLogistics();setDates()}));$("#close-session").addEventListener("click",closeSession);$("#reveal-answer").addEventListener("click",()=>{$("#reveal-answer").hidden=true;$("#answer-area").hidden=false;$("#rating-area").hidden=false});$$("[data-rating]").forEach(b=>b.addEventListener("click",()=>rate(b.dataset.rating)));$("#continue-math").addEventListener("click",()=>heavy||cap==="5"||cap==="15"?finish("vocab"):startMath());$("#stop-after-vocab").addEventListener("click",()=>heavy||cap==="5"||cap==="15"?startMath():finish("vocab"));$("#math-next").addEventListener("click",nextMath);$("#continue-reading").addEventListener("click",startReading);$("#finish-after-math").addEventListener("click",()=>finish("math"));$("#reading-next").addEventListener("click",()=>{blocks.push("Reading");finish("reading")});$("#return-today").addEventListener("click",()=>{closeSession();markRoute();view("today")});$("#copy-summary").addEventListener("click",async()=>{try{await navigator.clipboard.writeText(state.sessions[0]?summary(state.sessions[0]):"HESI Smoo: no completed session yet.");toast("Summary copied.")}catch{toast("Copy was blocked. Try Download data instead.")}});$("#download-results").addEventListener("click",()=>{const b=new Blob([JSON.stringify({app:"HESI Smoo",version:"0.3-content-pack",exportedAt:new Date().toISOString(),data:state},null,2)],{type:"application/json"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=`hesi-smoo-results-${dateKey()}.json`;a.click();URL.revokeObjectURL(u);toast("Results downloaded.")});$("#reset-prototype").addEventListener("click",()=>{if(!confirm("Reset all HESI Smoo data on this device?"))return;state=empty();cap=state.capacity;heavy=false;save();renderPlan();renderHeavy();renderLogistics();renderStored();renderQueue();setDates();toast("Study data reset.")});document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#session-shell").hidden)closeSession()})}
+function init(){state.lastOpenedAt=new Date().toISOString();save();setDates();bind();$$("[data-study-topic]").forEach(b=>b.addEventListener("click",()=>openTopic(b.dataset.studyTopic)));renderPlan();renderHeavy();renderLogistics();renderStored();renderQueue();const h=location.hash.slice(1);view(["today","progress","coach"].includes(h)?h:"today");window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();installPrompt=e;$("#install-button").hidden=false});$("#install-button").addEventListener("click",async()=>{if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$("#install-button").hidden=true});if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js",{updateViaCache:"none"}).catch(()=>{}));}
 init();
