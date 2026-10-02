@@ -20,10 +20,51 @@ const vocabItems = [
   ["reluctant","Reluctant","She was reluctant to begin an unfamiliar task.","Unwilling or hesitant."],
   ["transient","Transient","The dizziness was transient and resolved quickly.","Temporary; lasting only a short time."],
   ["meticulous","Meticulous","The technician kept meticulous records.","Very careful and precise about details."],
-  ["plausible","Plausible","The explanation sounded plausible, but it needed evidence.","Seeming reasonable or believable."]
+  ["plausible","Plausible","The explanation sounded plausible, but it needed evidence.","Seeming reasonable or believable."],
+  ["ambiguous","Ambiguous","The instruction was ambiguous, so two staff members interpreted it differently.","Open to more than one meaning; unclear."],
+  ["assess","Assess","The nurse will assess the patient’s pain before giving additional medication.","To examine or evaluate carefully."],
+  ["chronic","Chronic","He receives care for chronic back pain.","Continuing for a long time or recurring over time."],
+  ["comply","Comply","The patient agreed to comply with the preparation instructions.","To act according to a rule, request, or instruction."],
+  ["deficit","Deficit","The evaluation found a small memory deficit after the injury.","A shortage or a loss of an ability or amount."],
+  ["deteriorate","Deteriorate","The team watched for signs that the patient’s condition might deteriorate.","To become worse."],
+  ["disseminate","Disseminate","The clinic disseminated the updated safety guidance to all employees.","To spread information widely."],
+  ["disoriented","Disoriented","After waking, the patient was briefly disoriented about the time and place.","Confused about one’s surroundings, time, or situation."],
+  ["elicit","Elicit","The open-ended question helped elicit a fuller description of the symptoms.","To draw out or bring forth a response or information."],
+  ["eradicate","Eradicate","Public-health campaigns aim to eradicate diseases when possible.","To destroy or eliminate completely."],
+  ["ethical","Ethical","The committee reviewed whether the proposed study was ethical.","Consistent with principles about right conduct and fair treatment."],
+  ["facilitate","Facilitate","Clear labels facilitate faster access to emergency supplies.","To make an action or process easier."],
+  ["futile","Futile","Repeating the same failed step would be futile without changing the plan.","Unable to produce a useful result; pointless."],
+  ["imminent","Imminent","The weather alert warned that severe conditions were imminent.","About to happen very soon."],
+  ["inhibit","Inhibit","Fear of embarrassment can inhibit people from asking questions.","To hold back, prevent, or slow down."],
+  ["mandatory","Mandatory","Hand hygiene is mandatory before entering the unit.","Required; not optional."],
+  ["minimal","Minimal","The wound showed minimal swelling after treatment.","Very small in amount or degree."],
+  ["notify","Notify","Notify the provider immediately if the symptoms worsen.","To formally tell or inform someone."],
+  ["obtain","Obtain","The technician must obtain a labeled specimen before the test can begin.","To get or acquire."],
+  ["perceive","Perceive","Two people may perceive the same conversation differently.","To notice, understand, or interpret through the senses or mind."],
+  ["precede","Precede","A brief pause may precede the onset of a migraine.","To come before in time, order, or position."],
+  ["profound","Profound","The medication had a profound effect on her level of alertness.","Very great, deep, or intense."],
+  ["reconcile","Reconcile","The pharmacist reconciled the medication list with the patient’s current bottles.","To compare and bring into agreement; resolve differences."],
+  ["susceptible","Susceptible","People with weakened immune systems may be more susceptible to infection.","More likely to be affected or harmed by something."],
+  ["validate","Validate","A second test was used to validate the original result.","To confirm that something is accurate, sound, or acceptable."],
+  ["voluntary","Voluntary","Participation in the survey was voluntary.","Done by choice rather than required."],
+  ["vulnerable","Vulnerable","The plan gives extra support to vulnerable patients during heat emergencies.","More open to harm, injury, or difficulty."],
+  ["concurrent","Concurrent","The patient was treated for two concurrent conditions.","Happening at the same time."],
+  ["consistent","Consistent","The results were consistent with the earlier measurements.","In agreement with something else; reliably similar over time."],
+  ["contradict","Contradict","The new account seemed to contradict the earlier report.","To state or show the opposite of something."],
+  ["explicit","Explicit","The discharge instructions were explicit about when to call for help.","Stated clearly and directly, leaving little room for doubt."],
+  ["indicate","Indicate","A high temperature may indicate that further assessment is needed.","To point out, show, or suggest."],
+  ["maintain","Maintain","The patient was asked to maintain the same schedule for one week.","To keep something in its existing state or condition."],
+  ["priority","Priority","Airway concerns take priority over routine paperwork.","Something that deserves attention before other things."],
+  ["relevant","Relevant","Only information relevant to the symptom should guide this decision.","Closely connected to the matter being considered."],
+  ["restore","Restore","The treatment helped restore normal movement in the joint.","To bring back to a previous condition or function."],
+  ["subsequent","Subsequent","The subsequent test was completed after the initial screening.","Coming later in time or order."],
+  ["terminal","Terminal","The terminal stage of a process is its final stage.","Final; occurring at the end of a process or sequence."],
+  ["tolerate","Tolerate","The patient could not tolerate the medication because of nausea.","To endure or handle without an unacceptable reaction."],
+  ["undergo","Undergo","The sample will undergo additional testing tomorrow.","To experience or be subjected to a process or treatment."],
+  ["verify","Verify","Verify the patient’s identity before giving medication.","To check and confirm that something is true or correct."]
 ].map((x) => ({id:x[0],word:x[1],example:x[2],answer:x[3],kind:"vocab"}));
 
-const mathItems = [
+const seedMathItems = [
   ["fraction-mixed-decimal","math-fractions","Fraction conversion","What is 2 3/8 written as a decimal?",["2.38","2.375","2.625","2.83"],"2.375","3 ÷ 8 = 0.375, so 2 3/8 = 2.375."],
   ["fraction-decimal","math-fractions","Fraction conversion","Which fraction is equal to 0.45?",["9/20","4/5","45/10","1/4"],"9/20","0.45 = 45/100. Divide numerator and denominator by 5 to get 9/20."],
   ["fraction-add","math-fractions","Fraction arithmetic","A patient drinks 3/4 cup of water in the morning and 2/3 cup in the afternoon. How much is that altogether?",["1 1/12 cups","1 5/12 cups","1 1/2 cups","5/7 cup"],"1 5/12 cups","Use twelfths: 3/4 = 9/12 and 2/3 = 8/12. Together: 17/12 = 1 5/12."],
@@ -54,6 +95,101 @@ const mathItems = [
   ["expression","math-equations","Algebraic expressions","If y = 5, what is 2y² − 3?",["7","22","47","97"],"47","Substitute 5: 2 × 5² − 3 = 2 × 25 − 3 = 47."]
 ].map((x) => ({id:x[0],group:x[1],topic:x[2],prompt:x[3],choices:x[4],answer:x[5],explanation:x[6],kind:"question"}));
 
+// Parameterized original math items. Values are deliberately finite and inspected:
+// generation gives breadth without turning answer keys into a hallucination problem.
+const number = (value) => String(Number(value.toFixed(4)));
+const question = (id, group, topic, prompt, choices, answer, explanation) => ({id,group,topic,prompt,choices:[...new Set(choices.map(String))],answer:String(answer),explanation,kind:"question"});
+const generatedMathItems = [
+  ...[
+    [1,8,"0.125"],[3,8,"0.375"],[5,8,"0.625"],[7,8,"0.875"],
+    [1,4,"0.25"],[3,4,"0.75"],[1,5,"0.2"],[2,5,"0.4"],[3,5,"0.6"],[4,5,"0.8"]
+  ].map(([top,bottom,decimal]) => question(
+    `generated-fraction-decimal-${top}-${bottom}`,"math-fractions","Fraction conversion",
+    `What is ${top}/${bottom} written as a decimal?`,
+    [decimal, number(top/(bottom*10)), number((top+1)/bottom), number(top/bottom*10)], decimal,
+    `Divide ${top} by ${bottom}: ${top} ÷ ${bottom} = ${decimal}.`
+  )),
+  ...[
+    [1,3,1,6,1,2],[3,4,1,8,7,8],[5,6,1,3,1,6],[2,5,3,10,7,10],
+    [7,8,1,4,5,8],[3,5,1,4,17,20],[5,12,1,3,3,4],[7,10,1,5,9,10]
+  ].map(([a,b,c,d,n,den]) => question(
+    `generated-fraction-add-${a}-${b}-${c}-${d}`,"math-fractions","Fraction arithmetic",
+    `What is ${a}/${b} + ${c}/${d}?`,
+    [`${n}/${den}`,`${a+c}/${b+d}`,`${Math.abs(a-c)}/${den}`,`${n}/${b+d}`], `${n}/${den}`,
+    `Use a shared denominator of ${den}: ${a}/${b} + ${c}/${d} = ${n}/${den}.`
+  )),
+  ...[
+    [2.4,0.3,0.72],[1.25,0.4,0.5],[0.06,0.7,0.042],[3.5,0.08,0.28],
+    [4.2,0.05,0.21],[0.9,0.6,0.54],[2.75,0.2,0.55],[1.6,0.25,0.4]
+  ].map(([a,b,result]) => question(
+    `generated-decimal-multiply-${String(a).replace(".","p")}-${String(b).replace(".","p")}`,"math-decimals","Decimal multiplication",
+    `What is ${a} × ${b}?`, [result, number(result*10), number(result/10), number(a*b*100)], result,
+    `Multiply as whole numbers, then place the decimal using the total decimal places: ${a} × ${b} = ${result}.`
+  )),
+  ...[
+    [4.8,0.6,8],[3.75,0.5,7.5],[0.84,0.07,12],[6.3,0.9,7],
+    [2.4,0.08,30],[5.25,0.25,21],[1.44,0.12,12],[0.96,0.3,3.2]
+  ].map(([a,b,result]) => question(
+    `generated-decimal-divide-${String(a).replace(".","p")}-${String(b).replace(".","p")}`,"math-decimals","Decimal division",
+    `What is ${a} ÷ ${b}?`, [result, number(result/10), number(result*10), number(a*b)], result,
+    `Make the divisor a whole number by moving both decimals equally, then divide. ${a} ÷ ${b} = ${result}.`
+  )),
+  ...[
+    [15,240,36],[20,75,15],[12.5,160,20],[35,80,28],[5,360,18],[40,125,50]
+  ].map(([percent,whole,part]) => question(
+    `generated-percent-of-${percent}-${whole}`,"math-percent","Percent of a quantity",
+    `What is ${percent}% of ${whole}?`, [part, number(whole-percent), number(whole*(percent/1000)), number(whole+part)], part,
+    `${percent}% = ${percent/100}. Multiply: ${percent/100} × ${whole} = ${part}.`
+  )),
+  ...[
+    [18,45,40],[35,70,50],[12,30,40],[24,60,40],[27,90,30],[16,64,25]
+  ].map(([part,percent,whole]) => question(
+    `generated-percent-whole-${part}-${percent}`,"math-percent","Finding the whole",
+    `${part} is ${percent}% of what number?`, [whole, number(part*percent/100), number(part+percent), number(whole*percent/100)], whole,
+    `Write ${part} = ${percent/100} × whole. Then whole = ${part} ÷ ${percent/100} = ${whole}.`
+  )),
+  ...[
+    [50,65,30],[80,100,25],[120,90,25],[40,50,25],[200,230,15],[75,60,20]
+  ].map(([start,end,change]) => question(
+    `generated-percent-change-${start}-${end}`,"math-percent","Percent change",
+    `A value changes from ${start} to ${end}. What is the percent ${end>start?"increase":"decrease"}?`,
+    [`${change}%`,`${number(Math.abs(end-start))}%`,`${number((end/start)*100)}%`,`${number(change/10)}%`], `${change}%`,
+    `The change is ${Math.abs(end-start)}. Compare it with the original value: ${Math.abs(end-start)} ÷ ${start} = ${change/100} = ${change}%.`
+  )),
+  ...[
+    [3,4,28,16],[2,5,35,25],[5,3,48,18],[4,7,44,28],[1,6,56,48],[7,2,36,8]
+  ].map(([left,right,total,answer]) => question(
+    `generated-ratio-share-${left}-${right}-${total}`,"math-ratios","Ratios",
+    `The ratio of red to blue beads is ${left}:${right}. If there are ${total} beads total, how many are blue?`,
+    [answer, left*(total/(left+right)), total-left, answer+(total/(left+right))], answer,
+    `There are ${left+right} total parts. Each part is ${total} ÷ ${left+right} = ${total/(left+right)}. Blue has ${right} parts, so ${answer}.`
+  )),
+  ...[
+    [2,5,30,12],[3,8,64,24],[5,12,96,40],[4,7,56,32],[9,10,50,45],[3,4,84,63]
+  ].map(([amount,time,newTime,answer]) => question(
+    `generated-rate-${amount}-${time}-${newTime}`,"math-rates","Rates",
+    `A pump moves ${amount} mL in ${time} minutes. At the same rate, how many mL will it move in ${newTime} minutes?`,
+    [answer, amount*newTime, amount/time, amount+newTime], answer,
+    `First find the unit rate: ${amount} ÷ ${time} = ${amount/time} mL per minute. Then multiply by ${newTime}: ${answer} mL.`
+  )),
+  ...[
+    [2.5,"L","mL",2500],[0.75,"kg","g",750],[3.2,"m","cm",320],[1.25,"hours","minutes",75],
+    [2.4,"days","hours",57.6],[0.45,"L","mL",450]
+  ].map(([amount,from,to,answer]) => question(
+    `generated-conversion-${String(amount).replace(".","p")}-${from}-${to}`,"math-conversions","Unit conversion",
+    `How many ${to} are in ${amount} ${from}?`, [answer, number(answer/10), number(answer*10), number(amount)], answer,
+    `${amount} ${from} = ${answer} ${to}. Use the conversion factor so the original unit cancels before calculating.`
+  )),
+  ...[
+    [5,9,34,5],[7,4,39,5],[3,8,11,1],[6,5,41,6],[4,7,47,10],[9,2,47,5]
+  ].map(([coefficient,constant,total,answer]) => question(
+    `generated-equation-${coefficient}-${constant}-${total}`,"math-equations","One-variable equations",
+    `Solve: ${coefficient}x + ${constant} = ${total}`, [answer, total-constant, number(answer+1), number(answer-1)], answer,
+    `Subtract ${constant}: ${coefficient}x = ${total-constant}. Divide by ${coefficient}: x = ${answer}.`
+  ))
+];
+const mathItems = [...seedMathItems, ...generatedMathItems];
+
 const readingItems = [
   ["reading-main-idea-1","reading-main-idea","Main idea","At a community clinic, missed appointments had been rising for months. Staff first assumed patients simply forgot. A review showed that many reminders were sent only in English, while a large group of patients preferred Spanish. After the clinic began sending reminders in both languages, missed appointments declined. The staff then kept reviewing the data rather than assuming the first explanation would always be correct.","What is the passage mainly about?",["Patients prefer bilingual staff to medical care.","Data review helped the clinic identify and address a cause of missed appointments.","English reminders are never useful.","Most missed appointments are caused by forgetfulness."],1,"The passage traces a problem, an initial assumption, evidence that challenged it, and a change that improved outcomes."],
   ["reading-main-idea-2","reading-main-idea","Main idea","A school garden produced more vegetables than expected in its first year. The organizers did not simply celebrate the harvest. They recorded which beds received the most sunlight, which crops needed the least water, and which weeks had the most volunteer help. Next year, they plan to use those records to decide what to plant and where.","What is the main idea of the passage?",["The garden was unexpectedly successful because of volunteer help.","The organizers are using evidence from the first year to improve future planning.","Vegetables need more sunlight than water.","The school should build more garden beds."],1,"The whole passage is about learning from records to make a better next-round decision—not any one detail about vegetables, sun, or volunteers."],
@@ -64,7 +200,17 @@ const readingItems = [
   ["reading-detail-1","reading-detail","Supporting detail","A hospital unit changed its shift handoff form. The old form listed tasks but did not require nurses to record which tasks had been completed. The new form added a completion field and a space for unresolved concerns. After six weeks, nurses reported fewer duplicate calls at the beginning of each shift.","Which detail best supports the idea that the new form improved handoffs?",["The unit changed its form.","The old form listed tasks.","The new form had a completion field.","Nurses reported fewer duplicate calls after the change."],3,"The reduction in duplicate calls is the outcome evidence that the handoff process improved."],
   ["reading-detail-2","reading-detail","Supporting detail","A city opened a small cooling center during a heat advisory. It was placed near a bus route, stayed open until 8 p.m., and offered water. At the end of the week, staff found that attendance was highest from 4 p.m. to 7 p.m., when many nearby stores had already closed.","Which detail most directly supports the claim that late hours were useful?",["The center was near a bus route.","The center offered water.","Attendance was highest from 4 p.m. to 7 p.m.","A heat advisory was in effect."],2,"The attendance pattern directly connects the late hours to actual use. The other details describe the setting but do not test that claim."],
   ["reading-tone-1","reading-tone","Tone","The proposal is ambitious, and its supporters have identified a real problem. Still, the budget estimate assumes volunteer labor will remain available for three years, an assumption the proposal does not defend. Before approval, the committee should request a revised budget that shows what happens if volunteer hours decline.","The author’s tone is best described as",["mocking and dismissive","uncritically enthusiastic","cautiously supportive but skeptical","confused and indifferent"],2,"The author acknowledges a real problem and ambition while identifying a specific unsupported assumption and asking for revision."],
-  ["reading-tone-2","reading-tone","Tone","The new policy is concise and easy to follow. Its examples are particularly helpful for new employees. One section, however, uses a term that is never defined, so readers may apply it inconsistently. A brief definition would make an otherwise strong policy more reliable.","The tone is best described as",["hostile and sarcastic","balanced and constructive","entirely negative","excited but careless"],1,"The author identifies strengths, names one specific problem, and proposes a focused improvement."]
+  ["reading-tone-2","reading-tone","Tone","The new policy is concise and easy to follow. Its examples are particularly helpful for new employees. One section, however, uses a term that is never defined, so readers may apply it inconsistently. A brief definition would make an otherwise strong policy more reliable.","The tone is best described as",["hostile and sarcastic","balanced and constructive","entirely negative","excited but careless"],1,"The author identifies strengths, names one specific problem, and proposes a focused improvement."],
+  ["reading-main-idea-3","reading-main-idea","Main idea","A transit agency received complaints that riders could not easily tell when buses were delayed. Rather than add more signs at every stop, the agency first compared complaints with route data. It found that confusion was concentrated at transfer points where two routes shared a stop. The agency then tested a single combined display at those locations before considering a wider rollout.","What is the main idea of the passage?",["The agency plans to put more signs at every stop.","The agency used evidence to target a transit-information problem before expanding a solution.","Bus delays are most common at transfer points.","Riders prefer combined displays to phone alerts."],1,"The passage is about locating where the problem occurs and testing a targeted solution; the other answers isolate or invent details."],
+  ["reading-main-idea-4","reading-main-idea","Main idea","A grocery store began offering a quiet shopping hour each Tuesday. Managers initially measured success only by how many people attended. After speaking with shoppers, they learned that several people valued the hour even when attendance was low because the quieter environment made errands possible at all. The store now tracks both attendance and customer feedback.","Which statement best expresses the main idea?",["Tuesday is the least busy day at the grocery store.","Low attendance proves the quiet hour is unnecessary.","The store learned that one measurement did not fully capture the quiet hour’s value.","Customer feedback is always more accurate than attendance data."],2,"The passage contrasts a narrow measure with a fuller picture of whether the program helps. It does not reject attendance data entirely."],
+  ["reading-purpose-3","reading-purpose","Author’s purpose","This notice asks visitors to silence their phones before entering the recovery area. It explains that patients are resting, staff are communicating clinical information, and loud alerts can interrupt both. Visitors who need to make a call are directed to the hallway seating area.","The author’s purpose is to",["criticize visitors for owning phones.","explain a rule and the reasons for it.","argue that phones should be prohibited throughout the building.","report the results of a visitor survey."],1,"The notice gives an instruction, explains why it exists, and offers an alternative location for calls."],
+  ["reading-purpose-4","reading-purpose","Author’s purpose","A short guide explains how to prepare for a fire drill: listen for the alarm, leave by the nearest safe exit, and meet at the designated location. It also tells employees not to return for bags or equipment. The guide is distributed before the drill rather than after it.","Why was this guide written?",["To teach employees what to do during an upcoming drill.","To determine who caused a previous fire alarm.","To persuade employees to buy new safety equipment.","To describe the history of fire codes."],0,"The guide is procedural and prospective: it prepares people to carry out a drill safely."],
+  ["reading-inference-3","reading-inference","Inference","A rehabilitation center added short captioned videos to its home-exercise instructions. At first, staff expected the videos mainly to help patients with hearing loss. In follow-up calls, many other patients said they replayed the demonstrations when they forgot the sequence of movements.","Which inference is best supported?",["Captioned videos can support more than the initially expected group of users.","Patients no longer need written exercise instructions.","Every patient prefers video to in-person teaching.","Hearing loss is the main reason patients forget exercises."],0,"The follow-up calls show an additional use: replaying demonstrations. The passage does not support universal claims or replacing written instructions."],
+  ["reading-inference-4","reading-inference","Inference","A town’s recycling guide was rewritten with fewer categories and photographs of common items. In the month after the change, contamination in recycling bins fell. The town will keep collecting data through the winter, when holiday packaging changes what residents throw away.","What can reasonably be inferred?",["The guide may have helped residents sort items more accurately.","Photographs are never needed in public instructions.","Contamination will remain low in every season.","Residents had intentionally contaminated bins before the rewrite."],0,"The timing supports a cautious link between the clearer guide and lower contamination. The town’s continued data collection shows it is not claiming certainty across seasons."],
+  ["reading-detail-3","reading-detail","Supporting detail","A clinic wanted to reduce the time patients spent checking in. It moved the insurance-verification step from the front desk to an online form completed before the visit. After the change, the median check-in time dropped from eleven minutes to five minutes, although some patients still needed help using the form.","Which detail most directly supports the claim that the change reduced check-in time?",["The clinic used an online form.","Some patients needed help with the form.","The median check-in time fell from eleven minutes to five minutes.","Insurance information was previously verified at the front desk."],2,"The before-and-after time measurement is direct outcome evidence; the other details describe the intervention or a limitation."],
+  ["reading-detail-4","reading-detail","Supporting detail","A community center offered free blood-pressure screenings at a Saturday market. Volunteers set up near the entrance, used a large sign, and gave each participant a card explaining the result. By noon, 86 people had been screened, and 19 were referred to follow up with a clinician.","Which detail best supports the claim that the screening reached a substantial number of people?",["Volunteers set up near the entrance.","The sign was large.","Each participant received a result card.","Eighty-six people had been screened by noon."],3,"The number screened is the direct evidence about reach. The other details may have contributed, but they do not establish how many people were reached."],
+  ["reading-tone-3","reading-tone","Tone","The report’s recommendation is sensible: replace the broken exterior lights before winter. Its cost estimate, however, is oddly incomplete because it omits installation. That omission is not a reason to abandon the project; it is a reason to request a real estimate before approving it.","The tone is best described as",["supportive but exacting","celebratory and uncritical","angry and accusatory","uncertain about whether lights are useful"],0,"The author agrees with the goal but insists the proposal meet a basic standard of completeness."],
+  ["reading-tone-4","reading-tone","Tone","The volunteer manual is not glamorous, but it is unusually clear. It gives examples at the precise points where new volunteers are likely to make mistakes, and its checklist is short enough to use under pressure. Other manuals should steal this structure immediately.","The author’s tone is",["warmly approving","resentful","detached and neutral","worried about safety failures"],0,"The author strongly praises the manual’s practical clarity; “should steal this structure” is emphatic approval, not literal accusation."]
 ].map((x) => ({id:x[0],group:x[1],topic:x[2],passage:x[3],prompt:x[4],choices:x[5],answer:x[6],explanation:x[7],kind:"reading"}));
 
 const meta = {
