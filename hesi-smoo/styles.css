@@ -720,7 +720,10 @@ a:focus-visible {
   gap: 7px;
 }
 
-.topic-group button {
+.topic-group button,
+.topic-group a {
+  display: inline-flex;
+  align-items: center;
   min-height: 34px;
   padding: 7px 10px;
   color: var(--ink);
@@ -730,9 +733,152 @@ a:focus-visible {
   cursor: pointer;
   font-size: 13px;
   font-weight: 700;
+  text-decoration: none;
 }
 
-.topic-group button:hover { color: var(--purple-dark); border-color: rgba(111, 86, 217, .4); background: var(--purple-soft); }
+.topic-group button:hover,
+.topic-group a:hover { color: var(--purple-dark); border-color: rgba(111, 86, 217, .4); background: var(--purple-soft); }
+
+.topic-page {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(111, 86, 217, 0.12), transparent 27rem),
+    var(--canvas);
+}
+
+.topic-shell {
+  width: min(100%, 820px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: max(24px, env(safe-area-inset-top)) 24px max(48px, env(safe-area-inset-bottom));
+}
+
+.topic-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.back-link {
+  min-height: 40px;
+  padding: 10px 13px;
+  color: var(--purple-dark);
+  background: rgba(255, 255, 255, .7);
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.topic-status {
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.topic-heading {
+  margin: 48px 0 28px;
+}
+
+.topic-heading h1 {
+  margin: 0;
+  font-size: clamp(38px, 8vw, 58px);
+  letter-spacing: -.06em;
+  line-height: .95;
+}
+
+.topic-heading > p:last-child {
+  max-width: 650px;
+  margin: 14px 0 0;
+  color: var(--ink-soft);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.topic-workspace {
+  padding: 20px;
+  background: rgba(255, 255, 255, .65);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.topic-progress {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 4px 16px;
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.topic-card {
+  min-height: 390px;
+  padding: clamp(24px, 6vw, 44px);
+  background: var(--surface);
+  border: 1px solid rgba(52, 37, 80, .08);
+  border-radius: 22px;
+}
+
+.topic-card h2 {
+  max-width: 690px;
+  margin: 26px 0 24px;
+  font-size: clamp(25px, 4.5vw, 36px);
+  letter-spacing: -.04em;
+  line-height: 1.12;
+}
+
+.topic-passage {
+  max-width: 680px;
+  margin: 18px 0 26px;
+  color: var(--ink-soft);
+  font-family: Georgia, serif;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.topic-choices {
+  grid-template-columns: 1fr;
+}
+
+.topic-choices button {
+  padding: 15px 16px;
+  text-align: left;
+}
+
+.topic-next {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.topic-completion-copy {
+  max-width: 520px;
+  color: var(--ink-soft);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.topic-note {
+  display: flex;
+  gap: 13px;
+  margin: 18px 0;
+  padding: 18px 20px;
+  background: var(--teal-soft);
+  border: 1px solid rgba(32, 134, 109, .16);
+  border-radius: var(--radius-md);
+}
+
+.topic-note strong {
+  color: var(--teal);
+}
+
+.topic-note p {
+  margin: 3px 0 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.45;
+}
 
 .contract-mark {
   display: grid;
