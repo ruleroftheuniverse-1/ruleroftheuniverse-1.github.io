@@ -1,9 +1,11 @@
-const CACHE_NAME = "hesi-smoo-shell-v0.3.1";
+const CACHE_NAME = "hesi-smoo-shell-v0.4.0";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./styles.css",
   "./app.js",
+  "./topic.html",
+  "./topic.js",
   "./manifest.webmanifest",
   "./assets/icon.svg"
 ];
