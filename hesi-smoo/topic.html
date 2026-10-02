@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#6f56d9" />
+    <meta name="description" content="Focused HESI Smoo practice with explanations." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="HESI Smoo" />
+    <title>HESI Smoo Practice</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/icon.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="topic-page">
+    <main class="topic-shell">
+      <header class="topic-topbar">
+        <a class="back-link" href="index.html#today">Back to today</a>
+        <span class="topic-status" id="topic-status">Focused practice</span>
+      </header>
+
+      <section class="topic-heading" aria-labelledby="topic-title">
+        <p class="eyebrow" id="topic-lane">HESI PRACTICE</p>
+        <h1 id="topic-title">Loading topic…</h1>
+        <p id="topic-description">Loading the right questions.</p>
+      </section>
+
+      <section class="topic-workspace" aria-live="polite">
+        <div class="topic-progress">
+          <span id="question-count">Question 1</span>
+          <span id="question-progress">1 / 1</span>
+        </div>
+
+        <article class="topic-card" id="topic-card">
+          <p class="card-instruction" id="question-kind">APPLICATION PRACTICE</p>
+          <p class="topic-passage" id="topic-passage" hidden></p>
+          <h2 id="question-prompt">Loading…</h2>
+          <button class="reveal-button" id="reveal-vocab" type="button" hidden>Reveal meaning</button>
+          <div class="choice-grid topic-choices" id="topic-choices"></div>
+          <div class="answer-area" id="vocab-answer-area" hidden>
+            <div class="answer-rule"></div>
+            <p class="answer-label">MEANING</p>
+            <p class="answer-text" id="vocab-answer"></p>
+          </div>
+          <div class="feedback-box" id="topic-feedback" role="status" hidden></div>
+        </article>
+
+        <div class="rating-area" id="vocab-ratings" hidden>
+          <p>How did retrieval feel?</p>
+          <div class="rating-buttons">
+            <button type="button" data-rating="again"><strong>Again</strong><small>Missed it</small></button>
+            <button type="button" data-rating="hard"><strong>Hard</strong><small>Hesitated</small></button>
+            <button type="button" data-rating="gotIt"><strong>Got it</strong><small>Knew it</small></button>
+          </div>
+        </div>
+
+        <button class="primary-button topic-next" id="topic-next" type="button" hidden>
+          <span>NEXT ITEM</span><span aria-hidden="true">→</span>
+        </button>
+      </section>
+
+      <aside class="topic-note">
+        <strong id="note-title">Unknown means found.</strong>
+        <p id="note-copy">A miss tells us what to repair next. It does not say anything global about the learner.</p>
+      </aside>
+    </main>
+    <script src="topic.js" defer></script>
+  </body>
+</html>
